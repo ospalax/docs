@@ -15,7 +15,7 @@ What's New in 5.12
 
 OpenNebula Core
 ================================================================================
-- ...
+- **Monitoring** To improve Opennebula response times, the Monitoring is processed by Monitoring Daemon. Check :ref:`Monitoring <mon>` and :ref:`Monitoring Driver <devel-im>` for monitoring driver destription.
 
 Storage
 --------------------------------------------------------------------------------
