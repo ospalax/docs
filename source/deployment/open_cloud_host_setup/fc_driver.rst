@@ -11,6 +11,8 @@ Requirements
 
 Firecracker requires a Linux kernel >= 4.14 and KVM module.
 
+.. _fcmg_limitations:
+
 Considerations & Limitations
 ================================================================================
 
@@ -18,8 +20,6 @@ microVM CPU usage
 --------------------------------------------------------------------------------
 
 There are three main limitation regarding CPU usage for microVM:
-
-- CPU limitation is not available for microVMs. As they are intended o be used to manage serverless loads, the CPU usage limitation is not supported by Firecracker. This means that the available CPU will be evenly distributed among all the microVM.
 
 - OpenNebula deploys microVMs by using `Firecracker's Jailer <https://github.com/firecracker-microvm/firecracker/blob/master/docs/jailer.md>`__. The `jailer` takes care of increasing the security and isolation of the microVM and is the Firecracker recommended way for deploying microVMs in production environments. The jailer force the microVM to be isolated in a NUMA node, OpenNebula takes care of evenly distribute microVMs among the available NUMA nodes. One of the following policies can be selected in ``/var/lib/one/remotes/etc/vmm/firecracker/firecrackerrc``:
 
@@ -37,6 +37,8 @@ There are three main limitation regarding CPU usage for microVM:
         PIN_POLICY = "NONE",
         SOCKETS = "1",
         THREADS = "2" ]
+
+- As Firecracker Jailer performs a ``chroot`` operation under the microVM location, persistent images are not supported when using ``TM_MAD=shared``. In order to use persistent images when using ``TM_MAD=shared`` the system ``TM_MAD`` must be overwritten to use ``TM_MAD=ssh`` this can be easily achieved by adding ``TM_MAD_SYSTEM=ssh`` at the microVM template. More info on how to combine different ``TM_MADs`` can be found :ref:`here <shared-ssh-mode>`.
 
 MicroVM actions
 --------------------------------------------------------------------------------
@@ -79,6 +81,11 @@ There are some interaction options between Firecracker and OpenNebula configured
 |                       | shutdown gets stuck                                   |
 +-----------------------+-------------------------------------------------------+
 | cgroup_location       | Path where cgrup file system is mounted               |
++-----------------------+-------------------------------------------------------+
+| cgroup_cpu_shares     | If true the cpu.shares value will be set according to |
+|                       | the VM CPU value if false the cpu.shares is left by   |
+|                       | default which means that all the resources are shared |
+|                       | equally across the VMs.                               |
 +-----------------------+-------------------------------------------------------+
 | cgroup_delete_timeout | Timeout to wait a cgroup to be empty after            |
 |                       | shutdown/cancel a microVM                             |
@@ -123,6 +130,8 @@ Datastores
 --------------------------------------------------------------------------------
 
 Firecracker driver is compatible with **Filesystem Datastores**. Regarding of Transfer Managers (``TM_MAD``) Firecracker support every ``TM_MAD`` supported by Filesystem Datastores but ``qcow2`` as Firecracker does not support ``qcow2`` images.
+
+.. note:: Note that ``shared`` datastores have some limitations, check :ref:`Considerations & Limitations section <fcmg_limitations>`.
 
 More information about Filesystem Datastores can be found :ref:`here <fs_ds>`.
 

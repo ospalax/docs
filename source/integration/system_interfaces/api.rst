@@ -2008,12 +2008,12 @@ For example:
     <MONITORING_DATA>
         <VM>
             ...
-            <LAST_POLL>123</LAST_POLL>
+            <TIMESTAMP>123</TIMESTAMP>
             ...
         </VM>
         <VM>
             ...
-            <LAST_POLL>456</LAST_POLL>
+            <TIMESTAMP>456</TIMESTAMP>
             ...
         </VM>
     </MONITORING_DATA>
@@ -2240,6 +2240,9 @@ one.vmpool.monitoring
 |      |           | * **-1**: Resources belonging to the user and any of his groups |
 |      |           | * **>= 0**: UID User's Resources                                |
 +------+-----------+-----------------------------------------------------------------+
+| IN   | Int       | Number of records to be retrieved. If -1 every record is        |
+|      |           | retrieved                                                       |
++------+-----------+-----------------------------------------------------------------+
 | OUT  | Boolean   | true or false whenever is successful or not                     |
 +------+-----------+-----------------------------------------------------------------+
 | OUT  | String    | The information string / The error string.                      |
@@ -2256,22 +2259,22 @@ Sample output:
     <MONITORING_DATA>
         <VM>
             <ID>0</ID>
-            <LAST_POLL>123</LAST_POLL>
+            <TIMESTAMP>123</TIMESTAMP>
             ...
         </VM>
         <VM>
             <ID>0</ID>
-            <LAST_POLL>456</LAST_POLL>
+            <TIMESTAMP>456</TIMESTAMP>
             ...
         </VM>
         <VM>
             <ID>3</ID>
-            <LAST_POLL>123</LAST_POLL>
+            <TIMESTAMP>123</TIMESTAMP>
             ...
         </VM>
         <VM>
             <ID>3</ID>
-            <LAST_POLL>456</LAST_POLL>
+            <TIMESTAMP>456</TIMESTAMP>
             ...
         </VM>
     </MONITORING_DATA>
@@ -2619,6 +2622,9 @@ one.hostpool.monitoring
 | Type | Data Type |                 Description                 |
 +======+===========+=============================================+
 | IN   | String    | The session string.                         |
++------+-----------+---------------------------------------------+
+| IN   | Int       | Number of records to be retrieved. If -1    |
+|      |           | every record is retrieved.                  |
 +------+-----------+---------------------------------------------+
 | OUT  | Boolean   | true or false whenever is successful or not |
 +------+-----------+---------------------------------------------+
