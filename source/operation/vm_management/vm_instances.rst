@@ -459,6 +459,8 @@ From Sunstone:
 
 |image5|
 
+.. warning:: If the Virtual Machine is from vCenter, other considerations are needed, check :ref:`here <vcenter_live_resize>` for more information.
+
 .. _vm_guide2_resize_disk:
 
 Resizing VM Disks
@@ -818,7 +820,7 @@ This functionality auto add scheduling actions in VM templates. For add this onl
 .. prompt:: text $ auto
 
   :leases:
-    suspense:
+    suspend:
       time: "+1209600"
       color: "#000000"
       warning:
@@ -843,6 +845,35 @@ In the previous example you can see how scheduled actions are added and you can 
 |         | minus the time placed                                                                                 |
 +---------+-------------------------------------------------------------------------------------------------------+
 
+This functionality is also available in the CLI, through the following commands:
+
+- onevm create-chart
+- onevm update-chart
+- onevm delete-chart
+
+The charters can be added into the configuration file ``/etc/one/cli/onevm.yaml``:
+
+.. code::
+
+    :charters:
+      :suspend:
+        :time: "+1209600"
+        :warning:
+          :time: 86400
+      :terminate:
+        :time: "+1209600"
+        :warning:
+          :time: 86400
+
+The information about the charters can be checked with the command ``onevm show``:
+
+.. prompt:: bash $ auto
+
+    SCHEDULED ACTIONS
+    ID    ACTION  ARGS   SCHEDULED REPEAT   END  DONE                             MESSAGE CHARTER
+     1 terminate     - 01/01 03:00                  -                                   - In 1.25 hours *
+
+.. warning:: If the CHARTER has a * it shows the warning message as it was configured previously.
 
 .. _vm_guide2_user_defined_data:
 

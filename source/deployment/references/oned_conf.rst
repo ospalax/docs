@@ -10,18 +10,11 @@ Daemon Configuration Attributes
 ===============================
 
 -  ``MANAGER_TIMER``: Time in seconds the core uses to evaluate periodical functions. MONITORING\_INTERVAL cannot have a smaller value than MANAGER\_TIMER.
--  ``MONITORING_INTERVA_HOST``: Time in seconds between each HOST monitoring cycle.
--  ``MONITORING_INTERVAL_VM``: Time in seconds between each VM monitoring cycle.
 -  ``MONITORING_INTERVAL_DATASTORE``: Time in seconds between each DATASTORE monitoring cycle.
 -  ``MONITORING_INTERVAL_MARKET``: Time in seconds between each MARKETPLACE monitoring cycle.
 -  ``MONITORING_INTERVAL_DB_UPDATE``: Time in seconds between DB writes of VM monitoring information. -1 to disable DB updating and 0 to write every update.
 -  ``DS_MONITOR_VM_DISK``: Number of MONITORING_INTERVAL_DATASTORE intervals to monitor VM disks. 0 to disable. Only applies to fs and fs_lvm datastores.
 -  ``MONITORING_THREADS``: Maximum number of threads used to process monitor messages.
--  ``HOST_PER_INTERVAL``: Number of hosts monitored in each interval.
--  ``HOST_MONITORING_EXPIRATION_TIME``: Time, in seconds, to expire monitoring information. Use 0 to disable HOST monitoring recording.
--  ``VM_INDIVIDUAL_MONITORING``: VM monitoring information is normally obtained along with the host information. Set this TO ``"YES"`` if you use a custom monitor driver that needs to activate the VM monitoring process separately.
--  ``VM_PER_INTERVAL``: Number of VMs monitored in each interval.
--  ``VM_MONITORING_EXPIRATION_TIME``: Time, in seconds, to expire monitoring information. Use 0 to disable VM monitoring recording.
 -  ``SCRIPTS_REMOTE_DIR``: Remote path to store the monitoring and VM management script.
 -  ``PORT``: Port where ``oned`` will listen for XML-RPC calls.
 -  ``LISTEN_ADDRESS``: Host IP to listen on for XML-RPC calls (default: all IPs).
@@ -33,7 +26,10 @@ Daemon Configuration Attributes
    -  ``user`` (MySQL only): MySQL user's login ID.
    -  ``passwd`` (MySQL only): MySQL user's password.
    -  ``db_name`` (MySQL only): MySQL database name.
+   -  ``compare_binary`` (MySQL only): compare strings using BINARY clause makes name searches case sensitive.
+   -  ``encoding`` (MySQL only): charset to use for the db connections
    -  ``connections`` (MySQL only): maximum number of connections to the MySQL server.
+   -  ``timeout`` (SQLite only): timeout in ms for acquiring lock to DB, should be at least 100 ms
 
 -  ``VNC_PORTS``: VNC port pool for automatic VNC port assignment. If possible, the port will be set to ``START`` + ``VMID``. Refer to the :ref:`VM template reference <template>` for further information:
 
@@ -74,19 +70,11 @@ Example of this section:
 
     #MANAGER_TIMER = 15
 
-    MONITORING_INTERVAL_HOST = 180
-    MONITORING_INTERVAL_VMS  = 180
     MONITORING_INTERVAL_DATASTORE = 300
     MONITORING_INTERVAL_MARKET    = 600
 
     MONITORING_THREADS  = 50
-    #DS_MONITOR_VM_DISK              = 10
-    #HOST_PER_INTERVAL               = 15
-    #HOST_MONITORING_EXPIRATION_TIME = 43200
-
-    #VM_INDIVIDUAL_MONITORING      = "no"
-    #VM_PER_INTERVAL               = 5
-    #VM_MONITORING_EXPIRATION_TIME = 14400
+    #DS_MONITOR_VM_DISK = 10
 
     SCRIPTS_REMOTE_DIR=/var/tmp/one
 
@@ -756,12 +744,15 @@ OpenNebula evaluates these attributes:
 - on VM create (``onevm create``)
 - on VM attach NIC (``onevm nic-attach``), for example, to prevent using NIC/MAC
 
+.. _encrypted_attrs:
+
 Encrypted Attributes Configuration
 ==================================
 
 These attributes are encrypted and decrypted by the OpenNebula core. The supported attributes are:
 
 - **CLUSTER\_ENCRYPTED\_ATTR**
+- **DOCUMENT\_ENCRYPTED\_ATTR**
 - **DATASTORE\_ENCRYPTED\_ATTR**
 - **HOST\_ENCRYPTED\_ATTR**
 - **VM\_ENCRYPTED\_ATTR**: these attributes apply also to the user template.
@@ -772,6 +763,8 @@ Sample configuration:
 .. code-block:: bash
 
     CLUSTER_ENCRYPTED_ATTR = "PROVISION/PACKET_TOKEN"
+
+    DOCUMENT_ENCRYPTED_ATTR = "PROVISION_BODY"
 
     DATASTORE_ENCRYPTED_ATTR = "PROVISION/PACKET_TOKEN"
 
@@ -797,7 +790,6 @@ OpenNebula encrypts these attributes:
 - on object update (onecluster/onedatastore/onehost/onevm/onevnet update)
 
 To decrypt the attribute you need to use the `info` API method with `true` as a parameter. You can decrypt the attributes using the ``--decrypt`` option for ``onevm show``, ``onehost show`` and ``onevnet show``.
-
 
 Inherited Attributes Configuration
 ==================================

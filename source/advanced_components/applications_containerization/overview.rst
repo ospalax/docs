@@ -4,26 +4,44 @@
 Overview
 ================================================================================
 
-Application containerization is an OS-level virtualization method used to deploy and run distributed applications without launching an entire virtual machine (VM) for each application. OpenNebula supports the execution of multiple isolated applications within the VM instances, which means an instance could have multiple containers all sharing the same resources allocated to the running VM.
+Application container technologies, like `Docker <https://docker.com>`_ and `Kubernetes <https://kubernetes.io>`_, are becoming the leading standards for building containerized applications. They are serving as a foundation for deploying, running and managing applications because they offer increased levels of agility and efficiency. Kubernetes is widely used for the orchestration of containers on clusters, offering features for automating application deployment, scaling, and management.
 
-OpenNebula brings a built-in integration with Docker, the most common application containerization, to simplify the provision and management of Dockerized hosts. These virtualized Docker hosts are created using the OpenNebula Docker appliance (for `KVM <http://marketplace.opennebula.org/appliance/38cddc1e-8ef5-4759-9c38-954bfa9ae8d1>`__ or `vCenter <http://marketplace.opennebula.org/appliance/f39f36f3-bc8e-4151-bd86-ac3c9a5b6bac>`__) available on the OpenNebula Marketplace that should be previously downloaded and registered in the cloud datastore. OpenNebula provides cloud users with three approaches to use the Docker engine instances hosted by these virtualized Docker hosts.
+OpenNebula supports application containerization by offering different tools and integrations.
 
-The simpler approach is to directly instantiate and access the OpenNebula Docker image, and manage the dockerized hosts by using the OpenNebula GUI and CLI.
-OpenNebula also provides a driver for Docker Machine, which allows the remote provision and management of Docker hosts, and execution of Docker commands on the remote host from your Docker client.
+Firstly, OpenNebula brings a built-in integration with Docker Engine to simplify the provision and management of Dockerized hosts on your private cloud. OpenNebula provides cloud users with two approaches:
 
+* The simpler approach is to directly instantiate the :ref:`OpenNebula Docker Appliance <docker_appliance_overview>` available on the OpenNebula Marketplace and then manage the dockerized hosts by using OpenNebula CLI or Sunstone.
 
-|docker-machine|
+* OpenNebula also provides a driver for :ref:`Docker Machine <docker_machine_overview>`, which allows the remote provision and management of Docker hosts within OpenNebula cloud, and the execution of Docker commands on the remote host from your Docker client.
+
+As an alternative to run containerized applications, :ref:`OpenNebula Docker Hub Integration <docker_hub_overview>` provide access to `Docker Hub <https://hub.docker.com>`_ Official Images. This integration allows to easily import Docker images to the OpenNebula cloud. The OpenNebula context packages are installed during the import process so once an image is imported it’s fully prepared to be used on any supported hypervisor. You can easily deploy multi-vm applications as OneFlow services that can be scaled up and down “manually” or automatically based on user-defined “metrics”. 
+
+Furthermore, you can use different container orchestration platforms in your OpenNebula cloud: 
+
+* Check :ref:`Docker Swarm Integration <docker_swarm_overview>` to see how to build `Docker Engine clusters <https://docs.docker.com/engine/swarm/>`_ within your OpenNebula cloud using `Docker Swarm Classic <https://github.com/docker/classicswarm>`_  and `Docker Swarmkit <https://github.com/docker/swarmkit>`_
+
+* Check :ref:`Kubernetes Integration <kubernetes_appliance_overview>` to build and manage Kubernetes clusters within your OpenNebula Cloud
+
+* Check :ref:`Rancher Integration <rancher_integration_overview>` to build and manage Kubernetes clusters using `Rancher <https://rancher.com>`_ within your OpenNebula Cloud
 
 How Should I Read This Chapter
 ================================================================================
 
-We recommend you start reading the guide about how to :ref:`configure<docker_appliance_configuration>` and :ref:`use<docker_appliance_usage>` the OpenNebula Docker appliance with the OpenNebula CLI and GUI, and continue with the :ref:`Docker Machine guide<docker_host_provision_with_docker_machine>` only if you are interested in remote management of Docker hosts and clusters from your remote Docker client.
+To learn more about Docker microservices inside the OpenNebula platform we recommend you to read the :ref:`Docker integration <docker_appliance_overview>`.
+
+You can then continue with the :ref:`Docker Machine guide <docker_machine_overview>` - if you are interested in remote management of Docker hosts and clusters from a single remote location.
+
+When you are more familiar with Docker you can proceed to the sections for :ref:`Docker Engine Clusters <docker_swarm_overview>`, :ref:`OpenNebula Kubernetes Appliance <kubernetes_appliance_overview>` or :ref:`Rancher Integration <rancher_integration_overview>`.
 
 After reading this chapter you can continue configuring more :ref:`Advanced Components <advanced_components>`.
+
+.. note::
+
+   You can also consider the option of running your Docker application inside the :ref:`Firecracker microVM <fcmg>` and utilize the :ref:`Docker Hub <market_dh>`.
 
 Hypervisor Compatibility
 ================================================================================
 
-This Chapter applies both to KVM and vCenter.
+This Chapter applies to all hypervisors.
 
 .. |docker-machine| image:: /images/docker_arch.png

@@ -6,7 +6,7 @@ Platform Notes
 
 This page will show you the specific considerations at the time of using an OpenNebula cloud, according to the different supported platforms.
 
-This is the list of the individual platform components that have been through the complete `OpenNebula Quality Assurance and Certification Process <http://opennebula.org/software:testing>`__.
+This is the list of the individual platform components that have been through the complete `OpenNebula Quality Assurance and Certification Process <https://github.com/OpenNebula/one/wiki/Quality-Assurance>`__.
 
 Certified Components Version
 ================================================================================
@@ -14,28 +14,28 @@ Certified Components Version
 Front-End Components
 --------------------------------------------------------------------------------
 
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-|        Component        |                         Version                         |                    More information                   |
-+=========================+=========================================================+=======================================================+
-| RedHat Enterprise Linux | 7, 8                                                    | :ref:`Front-End Installation <frontend_installation>` |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-| CentOS                  | 7, 8                                                    | :ref:`Front-End Installation <frontend_installation>` |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-| Ubuntu Server           | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)                   | :ref:`Front-End Installation <frontend_installation>` |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-| Debian                  | 9, 10                                                   | :ref:`Front-End Installation <frontend_installation>` |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-| MariaDB or MySQL        | Version included in the Linux distribution              | :ref:`MySQL Setup <mysql>`                            |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-| PostgreSQL              | 9.5+, Version included in the Linux distribution        | :ref:`PostgreSQL Setup <postgresql>`                  |
-|                         | (except RHEL/CentOS 7)                                  |                                                       |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-| SQLite                  | Version included in the Linux distribution              | Default DB, no configuration needed                   |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-| Ruby Gems               | Versions installed by packages or install_gems utility  | :ref:`front-end installation <ruby_runtime>`          |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
-| Corosync+Pacemaker      | Version included in the Linux distribution              | :ref:`Front-end HA Setup <oneha>`                     |
-+-------------------------+---------------------------------------------------------+-------------------------------------------------------+
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+|        Component         |                        Version                         |                    More information                   |
++==========================+========================================================+=======================================================+
+| Red Hat Enterprise Linux | 7, 8                                                   | :ref:`Front-End Installation <frontend_installation>` |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+| CentOS                   | 7, 8                                                   | :ref:`Front-End Installation <frontend_installation>` |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+| Ubuntu Server            | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)                  | :ref:`Front-End Installation <frontend_installation>` |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+| Debian                   | 9, 10                                                  | :ref:`Front-End Installation <frontend_installation>` |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+| MariaDB or MySQL         | Version included in the Linux distribution             | :ref:`MySQL Setup <mysql>`                            |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+| PostgreSQL               | 9.5+, Version included in the Linux distribution       | :ref:`PostgreSQL Setup <postgresql>`                  |
+|                          | (except RHEL/CentOS 7)                                 |                                                       |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+| SQLite                   | Version included in the Linux distribution             | Default DB, no configuration needed                   |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+| Ruby Gems                | Versions installed by packages or install_gems utility | :ref:`front-end installation <ruby_runtime>`          |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
+| Corosync+Pacemaker       | Version included in the Linux distribution             | :ref:`Front-end HA Setup <oneha>`                     |
++--------------------------+--------------------------------------------------------+-------------------------------------------------------+
 
 .. _vcenter_nodes_platform_notes:
 
@@ -55,20 +55,20 @@ vCenter Nodes
 KVM Nodes
 --------------------------------------------------------------------------------
 
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
-|        Component        |                          Version                          |             More information            |
-+=========================+===========================================================+=========================================+
-| RedHat Enterprise Linux | 7, 8                                                      | :ref:`KVM Driver <kvmg>`                |
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
-| CentOS                  | 7, 8                                                      | :ref:`KVM Driver <kvmg>`                |
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
-| Ubuntu Server           | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)                     | :ref:`KVM Driver <kvmg>`                |
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
-| Debian                  | 9, 10                                                     | :ref:`KVM Driver <kvmg>`                |
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
-| KVM/Libvirt             | Support for version included in the Linux distribution.   | :ref:`KVM Node Installation <kvm_node>` |
-|                         | For CentOS/RedHat the packages from ``qemu-ev`` are used. |                                         |
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
++--------------------------+---------------------------------------------------------+-----------------------------------------+
+|        Component         |                         Version                         |             More information            |
++==========================+=========================================================+=========================================+
+| Red Hat Enterprise Linux | 7, 8                                                    | :ref:`KVM Driver <kvmg>`                |
++--------------------------+---------------------------------------------------------+-----------------------------------------+
+| CentOS                   | 7, 8                                                    | :ref:`KVM Driver <kvmg>`                |
++--------------------------+---------------------------------------------------------+-----------------------------------------+
+| Ubuntu Server            | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)                   | :ref:`KVM Driver <kvmg>`                |
++--------------------------+---------------------------------------------------------+-----------------------------------------+
+| Debian                   | 9, 10                                                   | :ref:`KVM Driver <kvmg>`                |
++--------------------------+---------------------------------------------------------+-----------------------------------------+
+| KVM/Libvirt              | Support for version included in the Linux distribution. | :ref:`KVM Node Installation <kvm_node>` |
+|                          | For CentOS/RHEL the packages from ``qemu-ev`` are used. |                                         |
++--------------------------+---------------------------------------------------------+-----------------------------------------+
 
 LXD Nodes
 --------------------------------------------------------------------------------
@@ -82,6 +82,25 @@ LXD Nodes
 +-------------------------+-----------------------------------------------------------+-----------------------------------------+
 | LXD                     | Support for LXD = 3.0.x either snap or system package     | :ref:`LXD Node Installation <lxd_node>` |
 +-------------------------+-----------------------------------------------------------+-----------------------------------------+
+
+Firecracker Nodes
+--------------------------------------------------------------------------------
+
++--------------------------+-------------------------------------------------+----------------------------------+
+|        Component         |                     Version                     |         More information         |
++==========================+=================================================+==================================+
+| Red Hat Enterprise Linux | 7, 8                                            | :ref:`Firecracker Driver <fcmg>` |
++--------------------------+-------------------------------------------------+----------------------------------+
+| CentOS                   | 7, 8                                            | :ref:`Firecracker Driver <fcmg>` |
++--------------------------+-------------------------------------------------+----------------------------------+
+| Ubuntu Server            | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)           | :ref:`Firecracker Driver <fcmg>` |
++--------------------------+-------------------------------------------------+----------------------------------+
+| Debian                   | 9, 10                                           | :ref:`Firecracker Driver <fcmg>` |
++--------------------------+-------------------------------------------------+----------------------------------+
+| KVM/Firecracker          | Support for KVM version included in the Linux   | :ref:`Firecracker Node           |
+|                          | distribution.                                   | Installation <fc_node>`          |
+|                          | For Firecracker/Jailer version v0.21.1 is used. |                                  |
++--------------------------+-------------------------------------------------+----------------------------------+
 
 .. _context_supported_platforms:
 
@@ -103,11 +122,13 @@ Linux Contextualization Packages
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | SUSE Linux Enterprise Server | 12 SP3                            | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
+| ALT Linux                    | p9, Sisyphus                      | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
++------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | Debian                       | 8, 9, 10                          | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | Devuan                       | 2                                 | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
-| Ubuntu                       | 14.04, 16.04, 18.04, 19.04, 20.04 | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
+| Ubuntu                       | 14.04, 16.04, 18.04, 19.10, 20.04 | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | Alpine Linux                 | 3.8, 3.9, 3.10, 3.11              | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
@@ -184,7 +205,7 @@ Application Containerization
 +------------------------------+--------------------------------------------+
 |             Component        |                  Version                   |
 +==============================+============================================+
-| Docker                       | 18.03.0-ce                                 |
+| Docker                       | 19.03.5 CE                                 |
 +------------------------------+--------------------------------------------+
 | Docker Machine               | 0.14.0                                     |
 +------------------------------+--------------------------------------------+
@@ -197,11 +218,9 @@ Sunstone
 +---------------------------+-----------------------------------------------------------------------------------------------+
 |          Browser          |                                            Version                                            |
 +===========================+===============================================================================================+
-| Chrome                    | 61.0 - 67.0                                                                                   |
+| Chrome                    | 61.0 - 85.0                                                                                   |
 +---------------------------+-----------------------------------------------------------------------------------------------+
-| Firefox                   | 59.0 - 61.0                                                                                   |
-+---------------------------+-----------------------------------------------------------------------------------------------+
-| IE                        | 11.0                                                                                          |
+| Firefox                   | 59.0 - 80.0                                                                                   |
 +---------------------------+-----------------------------------------------------------------------------------------------+
 
 .. note::
@@ -225,7 +244,7 @@ OpenNebula has been validated and is supported on VMware Cloud on AWS. Customers
 Certified Infrastructure Scale
 ================================================================================
 
-A single instance of OpenNebula (ie, a single ``oned`` process) has been stress tested to cope with 500 hypervisors without performance degradation. This is the maximum recommended configuration for a single instance, and depending on the underlying configuration of storage and networking mainly, it is recommended to switch to a federated scenario for any larger number of hypervisors.
+A single instance of OpenNebula (ie, a single ``oned`` process) has been stress-tested to cope with 500 hypervisors without performance degradation. This is the maximum recommended configuration for a single instance, and depending on the underlying configuration of storage and networking mainly, it is recommended to switch to a federated scenario for any larger number of hypervisors.
 
 However, there are several OpenNebula users managing significant higher numbers of hypervisors (on the order of two thousand) with a single instance. This largely depends, as mentioned, on the storage, networking and also monitoring configuration.
 

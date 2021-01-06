@@ -25,7 +25,7 @@ All deployment steps (create, provision, configuration) are covered by a single 
 Deployment of a new provision is a 4 step process:
 
 - **Add**. OpenNebula infrastructure objects (cluster, hosts, datastores, networks) are created, but disabled for general use.
-- :ref:`Provision <ddc_provision>`. Resources are allocated on the remote provider (e.g. use the provider's API to get clean new hosts).
+- :ref:`Provision <ddc_template>`. Resources are allocated on the remote provider (e.g. use the provider's API to get clean new hosts).
 - :ref:`Configure <ddc_config>`. Resources are reconfigured for a particular use (e.g. install virtualization tools on new hosts).
 - **Add**. OpenNebula virtual objects(images, marketplace apps, VM Templates, VNet templates, OneFlow service templates) are created.
 - **Enable**. Ready-to-use resources are enabled in OpenNebula.
@@ -49,6 +49,8 @@ Parameters:
 | ``--skip-provision``      | Skip hosts provision and configuration             | NO        |
 +---------------------------+----------------------------------------------------+-----------+
 | ``--skip-config``         | Skip hosts configuration                           | NO        |
++---------------------------+----------------------------------------------------+-----------+
+| ``--provider`` string     | Selects provider to deploy the provision           | NO        |
 +---------------------------+----------------------------------------------------+-----------+
 
 Example:
@@ -95,11 +97,23 @@ List
 
 The ``list`` command lists all provisions.
 
+Parameters:
+
++------------------+-------------------------------+-----------+
+| Parameter        | Description                   | Mandatory |
++==================+===============================+===========+
+| ``--csv``        | Show output as CSV            | NO        |
++------------------+-------------------------------+-----------+
+| ``--json``       | Show output as JSON           | NO        |
++------------------+-------------------------------+-----------+
+| ``--done``       | Show provisions in DONE state | NO        |
++------------------+-------------------------------+-----------+
+
 .. prompt:: bash $ auto
 
     $ oneprovision list
-                                      ID NAME                      CLUSTERS HOSTS VNETS DATASTORES STAT
-    8fc831e6-9066-4c57-9ee4-4b11fea98f00 myprovision                      1     1     1          2 configured
+    ID NAME                      CLUSTERS HOSTS VNETS DATASTORES STAT
+    18 myprovision                      1     1     1          2 RUNNING
 
 Show
 ----
@@ -115,29 +129,49 @@ Parameters:
 +------------------+---------------------+-----------+
 | ``--csv``        | Show output as CSV  | NO        |
 +------------------+---------------------+-----------+
+| ``--json``       | Show output as JSON | NO        |
++------------------+---------------------+-----------+
+| ``--xml``        | Show output as XML  | NO        |
++------------------+---------------------+-----------+
 
 Examples:
 
 .. prompt:: bash $ auto
 
-    $ oneprovision show 8fc831e6-9066-4c57-9ee4-4b11fea98f00
-    PROVISION  INFORMATION
-    ID                : 8fc831e6-9066-4c57-9ee4-4b11fea98f00
-    NAME              : myprovision
-    STATUS            : configured
+    $ oneprovision show 18
+    PROVISION 18 INFORMATION
+    ID    : 18
+    NAME  : testing
+    STATE : RUNNING
+
+    Provision Infrastructure Resources
 
     CLUSTERS
-    184
-
-    HOSTS
-    766
-
-    VNETS
-    135
+    114: tf
 
     DATASTORES
-    318
-    319
+    128: tf-images
+    129: tf-system
+
+    HOSTS
+    18: provision-cbbe1e477a1bd5e1324ae66bdffc20e28ae0b0b93f10db43
+
+    NETWORKS
+    14: tf-hostonly_nat
+
+    Provision Resource Resources
+
+    FLOWTEMPLATES
+    19: my_service
+
+    IMAGES
+    18: test_image
+
+    TEMPLATES
+    15: test_template
+
+    VNTEMPLATES
+    11: vntemplate
 
 Configure
 ---------
@@ -221,54 +255,10 @@ The ``host list`` command lists all provisioned hosts, and ``host top`` command 
 .. prompt:: bash $ auto
 
     $ oneprovision host list
-      ID NAME            CLUSTER   RVM PROVIDER VM_MAD   STAT
-     766 147.75.33.113   conf-prov   0 packet   kvm      on
+      ID NAME            CLUSTER   RVM VM_MAD   STAT
+     766 147.75.33.113   conf-prov   0 kvm      on
 
     $ oneprovision host top
-
-Host Power Off
-^^^^^^^^^^^^^^
-
-The ``host poweroff`` command offlines the host in OpenNebula (making it unavailable to users) and powers off the physical resource.
-
-.. prompt:: bash $ auto
-
-    $ oneprovision host poweroff 766 -d
-    2018-11-27 12:21:40 INFO  : Powering off host: 766
-    HOST 766: disabled
-
-Host Resume
-^^^^^^^^^^^
-
-The ``host resume`` command powers on the physical resource, and re-enables the OpenNebula host (making it available again to users).
-
-.. prompt:: bash $ auto
-
-    $ oneprovision host resume 766 -d
-    2018-11-27 12:22:57 INFO  : Resuming host: 766
-    HOST 766: enabled
-
-Host Reboot
-^^^^^^^^^^^
-
-The ``host reboot`` command offlines the OpenNebula host (making it unavailable for users), cleanly reboots the physical resource and re-enables the OpenNebula host (making it available again for users after successful OpenNebula host monitoring).
-
-.. prompt:: bash $ auto
-
-    $ oneprovision host reboot 766 -d
-    2018-11-27 12:25:10 INFO  : Rebooting host: 766
-    HOST 766: enabled
-
-Host Reset
-^^^^^^^^^^
-
-The ``host reboot --hard`` command offlines the OpenNebula host (making it unavailable for users), resets the physical resource and re-enables the OpenNebula host.
-
-.. prompt:: bash $ auto
-
-    $ oneprovision host reboot --hard 766 -d
-    2018-11-27 12:27:55 INFO  : Resetting host: 766
-    HOST 766: enabled
 
 Host SSH
 ^^^^^^^^
@@ -358,9 +348,9 @@ The ``oneprovision datastore list`` command lists all provisioned datastores.
 .. prompt:: bash $ auto
 
     $ oneprovision datastore list
-      ID NAME                SIZE AVAIL CLUSTERS     IMAGES TYPE DS      PROVIDER TM      STA
-     318 conf-provisio     271.1G 7%    184               0 img  fs      packet   ssh     on
-     319 conf-provisio         0M -     184               0 sys  -       packet   ssh     on
+      ID NAME                SIZE AVAIL CLUSTERS     IMAGES TYPE DS      TM      STA
+     318 conf-provisio     271.1G 7%    184               0 img  fs      ssh     on
+     319 conf-provisio         0M -     184               0 sys  -       ssh     on
 
 Datastore Delete
 ^^^^^^^^^^^^^^^^
@@ -376,29 +366,126 @@ The ``oneprovision datastore delete`` command deletes the datastore.
 Virtual Networks Management
 ---------------------------
 
-Individual virtual networks from the provision can be managed by the ``oneprovision vnet`` subcommands.
+Individual virtual networks from the provision can be managed by the ``oneprovision network`` subcommands.
 
 Vnet List
 ^^^^^^^^^
 
-The ``oneprovision vnet list`` command lists all virtual networks.
+The ``oneprovision network list`` command lists all virtual networks.
 
 .. prompt:: bash $ auto
 
-    $ oneprovision vnet list
-      ID USER            GROUP        NAME                CLUSTERS   BRIDGE   PROVIDER LEASES
-     136 oneadmin        oneadmin     myprovision-hostonl 184        br0      packet        0
+    $ oneprovision network list
+      ID USER            GROUP        NAME                CLUSTERS   BRIDGE   LEASES
+     136 oneadmin        oneadmin     myprovision-hostonl 184        br0      0
 
 Vnet Delete
 ^^^^^^^^^^^
 
-The ``oneprovision vnet delete`` command deletes the virtual network.
+The ``oneprovision network delete`` command deletes the virtual network.
 
 .. prompt:: bash $ auto
 
-    $ oneprovision vnet delete 136 -d
+    $ oneprovision network delete 136 -d
     2018-11-27 13:02:08 INFO  : Deleting vnet 136
     VNET 136: deleted
+
+Images
+------
+
+Individual images from the provision can be managed by the ``oneprovision image`` subcommands.
+
+Image List
+^^^^^^^^^^
+
+The ``oneprovision image list`` command lists all images.
+
+.. prompt:: bash $ auto
+
+    $ oneprovision image list
+    ID USER     GROUP    NAME                                                                                            DATASTORE     SIZE TYPE PER STAT RVMS
+    0  serverad users    test_image                                                                                      tf-images       2G OS    No rdy     0
+
+Image Delete
+^^^^^^^^^^^^
+
+The ``oneprovision image delete`` command deletes the image.
+
+.. prompt:: bash $ auto
+
+    $ oneprovision image delete 0 -d
+    2018-11-27 13:02:08 INFO  : Deleting image 0
+    IMAGE 0: deleted
+
+Templates
+---------
+
+Individual VM templates from the provision can be managed by the ``oneprovision template`` subcommands.
+
+Template List
+^^^^^^^^^^^^^
+
+The ``oneprovision template list`` command lists all templates.
+
+.. prompt:: bash $ auto
+
+    $ oneprovision template list
+    ID USER     GROUP    NAME                                                                                                                          REGTIME
+    0  oneadmin oneadmin test_template                                                                                                          09/21 14:17:28
+
+Template Delete
+^^^^^^^^^^^^^^^
+
+The ``oneprovision template delete`` command deletes the template.
+
+.. prompt:: bash $ auto
+
+    $ oneprovision template delete 0 -d
+    2018-11-27 13:02:08 INFO  : Deleting template 0
+    TEMPLATE 0: deleted
+
+VNet Templates
+--------------
+
+Individual VNet templates from the provision can be managed by the ``oneprovision vntemplate`` subcommands.
+
+VNet Template List
+^^^^^^^^^^^^^^^^^^
+
+The ``oneprovision vntemplate list`` command lists all VNet templates.
+
+.. prompt:: bash $ auto
+
+    $ oneprovision vntemplate list
+    ID USER     GROUP    NAME                                                                                                                          REGTIME
+    0  oneadmin oneadmin vntemplate                                                                                                             09/21 14:17:28
+
+VNet Template Delete
+^^^^^^^^^^^^^^^^^^^^
+
+The ``oneprovision vntemplate delete`` command deletes the VNet template.
+
+.. prompt:: bash $ auto
+
+    $ oneprovision vntemplate delete 0 -d
+    2018-11-27 13:02:08 INFO  : Deleting vntemplate 0
+    VNTEMPLATE 0: deleted
+
+Flow Templates
+--------------
+
+Individual Flow templates from the provision can be managed by the ``oneprovision flowtemplate`` subcommands.
+
+Flow Template Delete
+^^^^^^^^^^^^^^^^^^^^
+
+The ``oneprovision flowtemplate delete`` command deletes the Flow template.
+
+.. prompt:: bash $ auto
+
+    $ oneprovision flowtemplate delete 0 -d
+    2018-11-27 13:02:08 INFO  : Deleting flowtemplate 0
+    FLOWTEMPLATE 0: deleted
 
 .. _ddc_usage_log:
 
@@ -458,17 +545,21 @@ Example:
 
 * **batch** (``--batch``). It's expected to be run from scripts. No questions are asked, and the tool tries to deal automatically with the problem according to the failover method specified as a command line parameter:
 
-+-------------------------+------------------------------------------------+
-| Parameter               | Description                                    |
-+=========================+================================================+
-| ``--fail-quit``         | Set batch failover mode to quit (default)      |
-+-------------------------+------------------------------------------------+
-| ``--fail-retry`` number | Set batch failover mode to number of retries   |
-+-------------------------+------------------------------------------------+
-| ``--fail-cleanup``      | Set batch failover mode to clean up and quit   |
-+-------------------------+------------------------------------------------+
-| ``--fail-skip``         | Set batch failover mode to skip failing part   |
-+-------------------------+------------------------------------------------+
++-------------------------+---------------------------------------------------------------------------+
+| Parameter               | Description                                                               |
++=========================+===========================================================================+
+| ``--fail-quit``         | Set batch failover mode to quit (default)                                 |
++-------------------------+---------------------------------------------------------------------------+
+| ``--fail-retry`` number | Set batch failover mode to number of retries                              |
++-------------------------+---------------------------------------------------------------------------+
+| ``--fail-cleanup``      | Set batch failover mode to clean up and quit                              |
++-------------------------+---------------------------------------------------------------------------+
+| ``--fail-skip``         | Set batch failover mode to skip failing part                              |
++-------------------------+---------------------------------------------------------------------------+
+| ``--fail-sleep`` number | Time in seconds between each fail mode is executed and between each retry |
++-------------------------+---------------------------------------------------------------------------+
+| ``--fail-modes`` array  | Fail modes to apply in order                                              |
++-------------------------+---------------------------------------------------------------------------+
 
 Example of automatic retry:
 
@@ -499,3 +590,24 @@ Example of non-interactive provision with automatic clean up in case of failure:
     2018-11-27 13:52:02 INFO  : Deleting provision 18e85ef4-b29f-4391-8d89-c72702ede54e
     2018-11-27 13:52:02 INFO  : Undeploying hosts
     2018-11-27 13:52:05 INFO  : Deleting provision objects
+
+Example of non-interactive provision with multiple fail modes:
+
+.. prompt:: bash $ auto
+
+    $ oneprovision create simple.yaml -d --batch --fail-modes retry,cleanup
+    2020-06-17 10:30:54 INFO  : Creating provision objects
+    ERROR: Failed to create some resources
+    [one.vn.allocate] VN_MAD named "alias_sdnat" is not defined in oned.conf
+    ERROR: Failed to create some resources
+    [one.vn.allocate] VN_MAD named "alias_sdnat" is not defined in oned.conf
+    ERROR: Failed to create some resources
+    [one.vn.allocate] VN_MAD named "alias_sdnat" is not defined in oned.conf
+    ERROR: Failed to create some resources
+    [one.vn.allocate] VN_MAD named "alias_sdnat" is not defined in oned.conf
+    ERROR: Failed to create some resources
+    [one.vn.allocate] VN_MAD named "alias_sdnat" is not defined in oned.conf
+    2020-06-17 10:30:54 INFO  : Deleting provision 5949d07f-eb06-4b0b-8e8c-60c29ff30bb1
+    2020-06-17 10:30:54 INFO  : Undeploying hosts
+    2020-06-17 10:30:54 INFO  : Deleting provision virtual objects
+    2020-06-17 10:30:54 INFO  : Deleting provision objects

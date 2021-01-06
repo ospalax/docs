@@ -5,41 +5,81 @@
 Compatibility Guide
 ====================
 
-This guide is aimed at OpenNebula 5.11.x users and administrators who want to upgrade to the latest version. The following sections summarize the new features and usage changes that should be taken into account, or are prone to cause confusion. You can check the upgrade process in the following :ref:`section <upgrade>`
+This guide is aimed at OpenNebula 5.12.x users and administrators who want to upgrade to the latest version. The following sections summarize the new features and usage changes that should be taken into account, or are prone to cause confusion. You can check the upgrade process in the :ref:`corresponding section <upgrade>`.
 
-Visit the :ref:`Features list <features>` and the `Release Notes <https://opennebula.org/use/>`__ for a comprehensive list of what's new in OpenNebula 5.11.
+Visit the :ref:`Features list <features>` and the `Release Notes <https://opennebula.io/use/>`__ for a comprehensive list of what's new in OpenNebula 5.12.
 
-OneFlow revamp
-==============
+HTTP_PROXY and XMLRPC API
+=========================
+Scheduler clears the http_proxy environment variable. If your oned xml-rpc API is behind a HTTP_PROXY you need to update ``sched.conf`` and set the right value there.
 
-In the new OneFlow server, the state **poweroff** sets the service state to **warning**.
+Ruby API
+========
 
-New default restricted attributes
-=================================
+Some functions has been moved from API to new API extensions:
 
-The ``PIN_POLICY`` and ``HUGEPAGE_SIZE`` attributes from ``TOPOLOGY`` are now restricted by default.
+- save_as_template
 
-New monitoring
-==============
+To be able to use them, you need to extend from the extensions file:
 
-The monitoring system has been redesigned to improve its scalability and to better support different deployment scenarios. This redesign introduces some incompatibilities:
+.. code::
 
-- Custom probes need to be copied to the new locations, see :ref:`Monitoring Guide <mon>` to learn about the new locations.
-- In order to speed-up DB access, monitoring and VM/Host data has been separated. The XPATH of some data had to be modified to accommodate the change. You may need to adapt any custom integration to the new XPATHS. In particular:
+    require 'opennebula/virtual_machine_ext'
 
-  - ``HOST/LAST_MON_TIME`` was removed
-  - ``/HOST/HOST_SHARE/[DISK_USAGE,FREE_DISK,MAX_DISK,USED_DISK]`` was moved to ``/HOST/HOST_SHARE/DATASTORES/[DISK_USAGE,FREE_DISK,MAX_DISK,USED_DISK]``
-  - ``/HOST/HOST_SHARE/[USED*, FREE*]`` was moved to monitoring object ``/MONITORING/CAPACITY/[USED*, FREE*]``
-  - ``/HOST/TEMPLATE/[NETRX, NETTX]`` was moved to monitoring object ``/MONITORING/SYSTEM/[NETRX, NETTX]``
+    vm_new = VirtualMachine.new(VirtualMachine.build_xml(@pe_id), @client)
+    vm_new.extend(VirtualMachineExt)
 
-- No monitor information is sent in listing API call, neither hosts nor VMs.
-- Configuration of monitoring probes and parameters has been moved to its own file, you may need to adapt/migrate your custom modifications from ``oned.conf`` to ``monitord.conf``.
-- The monitoring system now may use TCP transport. You'll need to open incoming connections to port 4124 and TCP to the front-end, in addition to the UDP one.
+Distributed Edge Provisioning
+=============================
 
-Accounting and Showback
-=======================
+Information about provision is stored in a JSON document. For this reason, the ERB evaluation must be done using the variable ``@body['provision']``.
 
-All the states that make Virtual Machines to remain in the host are taken in account to calculate the accounting and showback records. So now, the following states are also computed:
+To access to infrastructure resources, just access to key ``infrastrcuture`` following by the object, e.g:
 
-- Poweroff
-- Suspend
+.. code::
+
+    @body['provision']['infrastructure']['datastores'][0]['id']
+
+To access to resources, just access to key ``resource`` following by the object, e.g:
+
+.. code::
+
+    @body['provision']['resource']['images'][0]['id']
+
+Check more information :ref:`here <ddc_virtual>`.
+
+In provision template, the attribute ``driver`` has be changed by ``provider``.
+
+The driver EC2 has been renamed to AWS to follow Terraform provider name. Consequently, the keys has been renamed in the following way:
+
+- ec2_access -> aws_access
+- ec2_secret -> aws_secret
+- region_name -> aws_region
+
+Provision drivers has been changed by Terraform, so the following commands are no longer avaialble:
+
+- ``oneprovision host resume``
+- ``oneprovision host poweroff``
+- ``oneprovision host reboot``
+- ``oneprovision host reboot --hard``
+
+Datastore Driver Changes
+=============================
+
+   - Now the CP datastore action needs to return also de format of the file copied (e.g raw or qcow2). This way, when a file is uploaded by the user, the format of the file is automatically retrieved avoiding user mistakes.
+
+   - The ``DRIVER`` and ``FSTYPE`` attributes are deprecated and they won't be taking into account any more.
+
+.. note:: The ``DRIVER`` attribute will be set automatically for each disk.
+
+.. _compatibility_kvm:
+
+KVM Driver Defaults Changed
+===========================
+
+KVM driver comes with new defaults, which better reflect modern use of this technology (i.e., leverage paravirtualized interfaces or rely more on QEMU guest agent). Consult the current defaults in following vanilla configuration files provided with the OpenNebula:
+
+- ``/etc/one/vmm_exec/vmm_exec_kvm.conf``
+- ``/var/lib/one/remotes/etc/vmm/kvm/kvmrc``
+
+Default path to QEMU emulator (parameter ``EMULATOR`` in ``/etc/one/vmm_exec/vmm_exec_kvm.conf``) has changed from distribution specific-path to an unified symbolic link ``/usr/bin/qemu-kvm-one``, which is created on hypervisors during the installation of KVM node package, and points to the QEMU binary of each node operating system.

@@ -76,8 +76,8 @@ To list the available Service Templates, use ``oneflow-template list/show/top``:
 .. code::
 
     $ oneflow-template list
-            ID USER            GROUP           NAME
-             0 oneadmin        oneadmin        my_service
+            ID USER            GROUP           NAME         REGTIME
+             0 oneadmin        oneadmin        my_service   10/28 17:42:46
 
     $ oneflow-template show 0
     SERVICE TEMPLATE 0 INFORMATION
@@ -85,6 +85,7 @@ To list the available Service Templates, use ``oneflow-template list/show/top``:
     NAME                : my_service
     USER                : oneadmin
     GROUP               : oneadmin
+    REGISTRATION_TIME   : 10/28 17:42:46
 
     PERMISSIONS
     OWNER               : um-
@@ -99,9 +100,33 @@ To list the available Service Templates, use ``oneflow-template list/show/top``:
 
     ....
 
+.. _appflow_use_cli_delete_service_template:
+
 Templates can be deleted with ``oneflow-template delete``.
 
+You can also delete VM templates associated to the service template:
+
+- ``--delete-vm-templates``: this will delete all the VM templates associated and the service template.
+- ``--delete-images``: this will delete all the VM templates and images associated and the service template.
+
 You can also create and manage Service Templates from Sunstone.
+
+.. _appflow_use_cli_automatic_delete:
+
+Automatic delete service if all roles are terminated
+----------------------------------------------------
+
+Service VMs can be terminated using scheduled actions or VM charters. This can lead to a situation where you have a running service with no VMs associated to it.
+To avoid this you can use automatic deletion feature.
+
+CLI
+^^^
+
+To enable it using the CLI, you need to add the following attribute to the service template:
+
+.. prompt:: bash $ auto
+
+    "automatic_deletion": true
 
 .. _appflow_use_cli_running_state:
 
@@ -167,7 +192,7 @@ All these operations can be also done through the CLI. When you instantiate the 
     {"networks_values": [{"Private":{"id":"0"}}]}
 
     # Reserve from a network
-    {"networks_valies": [{"reserve_from": "0", "extra":"NAME=RESERVATION\nSIZE=5"}]}
+    {"networks_values":[{"Private":{"reserve_from":"0", "extra": ""NAME=RESERVATION\nSIZE=5""}}]}
 
     # Instantiate a network template
     {"networks_values": [{"Private":{"template_id":"0", "extra":"AR=[ IP=192.168.122.10, SIZE=10, TYPE=IP4 ]"}}]}
@@ -218,8 +243,8 @@ To list the available Services, use ``oneflow list/top``:
 .. prompt:: bash $ auto
 
     $ oneflow list
-            ID USER            GROUP           NAME                      STATE
-             1 oneadmin        oneadmin        my_service                PENDING
+            ID USER            GROUP           NAME          STARTTIME          STATE
+             1 oneadmin        oneadmin        my_service    10/28 17:42:46     PENDING
 
 |image3|
 
@@ -235,6 +260,7 @@ The Service will eventually change to ``DEPLOYING``. You can see information for
     GROUP               : oneadmin
     STRATEGY            : straight
     SERVICE STATE       : DEPLOYING
+    START TIME          : 10/28 17:42:46
 
     PERMISSIONS
     OWNER               : um-
@@ -281,6 +307,8 @@ The Service will eventually change to ``DEPLOYING``. You can see information for
 
     LOG MESSAGES
     09/19/12 14:44 [I] New state: DEPLOYING
+
+.. warning:: Once the service has been instantiated, all the operations with the virtual machines **must** be performed using OneFlow commands or API.
 
 Life-cycle
 ----------
@@ -353,16 +381,17 @@ Each Role has an individual state, described in the following table:
 Life-Cycle Operations
 ---------------------
 
-Services are deployed automatically by the Life Cycle Manager. To undeploy a running Service, users can use the commands ``oneflow shutdown`` and ``oneflow delete``.
+Services are deployed automatically by the Life Cycle Manager. To undeploy a running Service, users can use the command ``oneflow delete``.
 
-The command ``oneflow shutdown`` will perform a graceful a ``terminate`` on all the running VMs (see :ref:`onevm terminate <vm_instances>`). If the ``straight`` deployment strategy is used, the Roles will be shutdown in the reverse order of the deployment.
+The command ``oneflow delete`` will perform a graceful a ``terminate`` on all the running VMs (see :ref:`onevm terminate <vm_instances>`). If the ``straight`` deployment strategy is used, the Roles will be shutdown in the reverse order of the deployment.
 
-After a successful shutdown, the Service will remain in the ``DONE`` state. If any of the VM terminate operations cannot be performed, the Service state will show ``FAILED``, to indicate that manual intervention is required to complete the cleanup. In any case, the Service can be completely removed using the command ``oneflow delete``.
-
-If a Service and its VMs must be immediately undeployed, the command ``oneflow delete`` can be used from any Service state. This will execute a terminate operation for each VM and delete the Service. Please be aware that **this is not recommended**, because failed terminate actions may leave VMs in the system.
+After a successful shutdown, the Service will remain in the ``DONE`` state. If any of the VM terminate operations cannot be performed, the Service state will show ``FAILED``, to indicate that manual intervention is required to complete the cleanup. In any case, the Service can be completely removed using the command ``oneflow recover --delete``.
 
 When a Service fails during a deployment, undeployment or scaling operation, the command ``oneflow recover`` can be used to retry the previous action once the problem has been solved.
 
+.. _flow_purge_done:
+
+In order to delete all the services in ``DONE`` state, to free some space in your database, you can use the command ``oneflow purge-done``.
 
 Managing Permissions
 ====================
@@ -374,8 +403,8 @@ For example, to change the owner and group of the Service 1, we can use ``oneflo
 .. code::
 
     $ oneflow list
-            ID USER            GROUP           NAME                      STATE
-             1 oneadmin        oneadmin        my_service                RUNNING
+            ID USER            GROUP           NAME           STARTTIME         STATE
+             1 oneadmin        oneadmin        my_service     10/28 17:42:46    RUNNING
 
     $ onevm list
         ID USER     GROUP    NAME            STAT UCPU    UMEM HOST             TIME
@@ -386,8 +415,8 @@ For example, to change the owner and group of the Service 1, we can use ``oneflo
     $ oneflow chown my_service johndoe apptools
 
     $ oneflow list
-            ID USER            GROUP           NAME                      STATE
-             1 johndoe         apptools        my_service                RUNNING
+            ID USER            GROUP           NAME           STARTTIME         STATE
+             1 johndoe         apptools        my_service     10/28 17:42:46    RUNNING
 
     $ onevm list
         ID USER     GROUP    NAME            STAT UCPU    UMEM HOST             TIME
@@ -435,6 +464,7 @@ Another common scenario is having Service Templates created by oneadmin that can
     NAME                : my_service
     USER                : oneadmin
     GROUP               : oneadmin
+    REGISTRATION_TIME   : 10/28 17:42:46
 
     PERMISSIONS
     OWNER               : um-
@@ -450,6 +480,7 @@ Another common scenario is having Service Templates created by oneadmin that can
     NAME                : my_service
     USER                : oneadmin
     GROUP               : oneadmin
+    REGISTRATION_TIME   : 10/28 17:42:46
 
     PERMISSIONS
     OWNER               : um-
@@ -537,6 +568,41 @@ Some common failures can be resolved without manual intervention, calling the ``
 +------------------------+-----------------+--------------------------------------------------------------------------+
 
 You can use the option ``--delete`` to delete the current service and its VMs.
+
+Update Service
+==============
+
+You can update a service in running state, to do that you need to use the command ``oneflow update <service_id>``. It will prompt an editor with
+the service template body in JSON format.
+
+You can update all the values, except the following ones:
+
+Service
+-------
+
+- **custom_attrs**: it only has sense when deploying, not in running.
+- **custom_attrs_values**: it only has sense when deploying, not in running.
+- **deployment**: changing this, changes the undeploy operation.
+- **log**: this is just internal information, no sense to change it.
+- **name**: this has to be changed using rename operation.
+- **networks**: it only has sense when deploying, not in running.
+- **networks_values**: it only has sense when deploying, not in running.
+- **ready_status_gate**: it only has sense when deploying, not in running.
+- **state**: this is internal information managed by OneFlow server.
+
+Role
+----
+
+- **cardinality**: this is internal information managed by OneFlow server.
+- **last_vmname**: this is internal information managed by OneFlow server.
+- **nodes**: this is internal information managed by OneFlow server.
+- **parents**: this has only sense in deploy operation.
+- **state**: this is internal information managed by OneFlow server.
+- **vm_template**: this will affect scale operation.
+
+.. warning:: If you try to change one of these values above, you will get an error. The server will also check the schema in case there is another error.
+
+.. note:: If you change the value of min_vms the OneFlow server will adjust the cardinality automatically. Also, if you add or edit elasticity rules they will be automatically evaluated.
 
 Advanced Usage
 ================================================================================

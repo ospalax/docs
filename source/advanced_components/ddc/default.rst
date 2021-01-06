@@ -1,11 +1,10 @@
 .. _default_ddc_templates:
 
-================================
-Default Infrastructure Provision
-================================
+============================
+Cluster Provisioning Example
+============================
 
-In this section you can see how to easily deploy a fully operational cluster with ``oneprovision``. This is a cluster with all the resources needed to deploy a virtual machine,
-it includes hosts, datastores and virtual networks. You will also see some examples about how to deploy the virtual machine and ssh to it.
+In this section you can see how to automatically deploy a fully operational remote cluster with ``oneprovision``. This is a cluster with all the resources needed to run virtual machines, including hosts, datastores and virtual networks. You will also see some examples about how to run the virtual machine and ssh to it.
 
 Default Templates
 -----------------
@@ -15,12 +14,10 @@ OpenNebula provision currently supports two different providers:
 - AWS
 - Packet
 
-For each of them, you can find an example template, ready to use, provided by OpenNebula. These templates are located in ``/usr/share/one/oneprovision/examples``:
+For each of them, OpenNebula brings an example template, ready to use, provided by OpenNebula. These templates are located in ``/usr/share/one/oneprovision/examples``:
 
-- example_ec2.yaml
+- example_aws.yaml
 - example_packet.yaml
-
-In the following sections you are going to see what changes are needed to deploy these templates and a picture with the resulting infrastructure.
 
 AWS Deployment
 --------------
@@ -33,15 +30,28 @@ In this example we are going to deploy a cluster with two hosts and the rest of 
 Deployment File
 ###############
 
-The deployment file provided by OpenNebula (``/usr/share/one/oneprovision/examples/example_ec2.yaml``) needs some changes in order to deploy the hosts.
+The deployment file provided by OpenNebula (``/usr/share/one/oneprovision/examples/example_aws.yaml``) needs some changes in order to deploy the hosts.
 
-First of all, you need to add your AWS credentials:
+First of all, you need to create a provider using your AWS credentials and region:
 
-- ec2_access
-- ec2_secret
+- aws_access
+- aws_secret
+- aws_region
 
-In the template you have to change ``******`` by a valid key. You can find `here <https://docs.aws.amazon.com/secretsmanager/latest/userguide/tutorials_basic.html>`__
-a guide about how to create those credentials.
+.. prompt:: bash $ auto
+
+    $ cat aws.yaml
+    ---
+    name: "aws"
+    connection:
+        aws_access: "**********"
+        aws_secret: "**********"
+        aws_region: "us-east-1"
+
+    $ oneprovider create aws.yaml
+    ID: 0
+
+In the template you have to change ``******`` by a valid key. You can find `here <https://docs.aws.amazon.com/secretsmanager/latest/userguide/tutorials_basic.html>`__ a guide about how to create those credentials.
 
 Then you need to add the hosts you want to deploy. You have to uncomment the Ubuntu or CentOS hosts, in case of CentOS the final result would be the following:
 
@@ -65,17 +75,17 @@ After doing this, we have our template ready to be deployed in AWS. You can vali
 
 .. prompt:: bash $ auto
 
-    $ oneprovision validate example_ec2.yaml && echo OK
+    $ oneprovision validate example_aws.yaml && echo OK
     OK
 
 Deploy
 ######
 
-To deploy it you just need to use the command ``oneprovision create example_ec2.yaml``:
+To deploy it you just need to use the command ``oneprovision create example_aws.yaml``:
 
 .. prompt:: bash $ auto
 
-    $ oneprovision create example_ec2.yaml
+    $ oneprovision create example_aws.yaml
     ID: ea5a0e54-7b22-4535-9e70-de6bc197f228
 
 .. warning:: This will take a bit, because hosts need to be allocated on AWS/Packet, configured to run hypervisor, and added into OpenNebula.
@@ -88,19 +98,19 @@ Once the deployment has finished, we can check that all the objects have been co
 .. prompt:: bash $ auto
 
     $ oneprovision host list
-  ID NAME               CLUSTER         ALLOCATED_CPU      ALLOCATED_MEM PROVIDER STAT
-   5 54.167.216.3       EC2Cluster      0 / -100 (0%)                  - ec2      off
-   4 100.24.17.189      EC2Cluster      0 / -100 (0%)                  - ec2      off
+  ID NAME               CLUSTER         ALLOCATED_CPU      ALLOCATED_MEM STAT
+   5 54.167.216.3       AWSCluster      0 / -100 (0%)                  - off
+   4 100.24.17.189      AWSCluster      0 / -100 (0%)                  - off
 
     $ oneprovision datastore list
   ID NAME               SIZE AVA CLUSTERS IMAGES TYPE DS      TM      STAT
- 111 EC2Cluster-system    0M -   106           0 sys  -       ssh     on
- 110 EC2Cluster-image    80G 97% 106           0 img  fs      ssh     on
+ 111 AWSluster-system    0M -   106           0 sys  -        ssh     on
+ 110 AWSCluster-image    80G 97% 106           0 img  fs      ssh     on
 
-    $ oneprovision vnet list
+    $ oneprovision network list
   ID USER     GROUP    NAME                             CLUSTERS   BRIDGE   LEASES
-  15 oneadmin oneadmin EC2Cluster-private                    106  vxbr100        0
-  14 oneadmin oneadmin EC2Cluster-private-host-only-nat      106      br0        0
+  15 oneadmin oneadmin AWSCluster-private                    106  vxbr100        0
+  14 oneadmin oneadmin AWSCluster-private-host-only-nat      106      br0        0
 
 We can now deploy virtual machines on those hosts. You just need to download and app from the marketplace, store it in the image datastore and instantiate it:
 
@@ -120,11 +130,11 @@ We can now deploy virtual machines on those hosts. You just need to download and
 
     $ ontemplate update 0
     NIC = [
-        NETWORK = "EC2Cluster-private",
+        NETWORK = "AWSCluster-private",
         NETWORK_UNAME = "oneadmin",
         SECURITY_GROUPS = "0" ]
     NIC = [
-        NETWORK = "EC2Cluster-private-host-only-nat",
+        NETWORK = "AWSCluster-private-host-only-nat",
         NETWORK_UNAME = "oneadmin",
         SECURITY_GROUPS = "0" ]
     NIC_DEFAULT = [
@@ -145,7 +155,7 @@ We can now deploy virtual machines on those hosts. You just need to download and
 Packet Deployment
 -----------------
 
-In this example we are going to deploy a cluster with two hosts and the rest of infrastructure resources. Virtual machines deployed in each host will be able to communicate with each other and also we are going to be able to ssh them from outside the host.
+In this example we are going to deploy a cluster with two hosts and the rest of infrastructure resources. Virtual machines deployed in each host will be able to communicate with each other and also we are going to be able to ssh them.
 
 
 .. image:: /images/ddc_packet_deployment.png
@@ -154,14 +164,36 @@ In this example we are going to deploy a cluster with two hosts and the rest of 
 Deployment File
 ###############
 
-The deployment file provided by OpenNebula (``/usr/share/one/oneprovision/examples/example_packet.yaml``) Needs some changes in order to deploy the hosts.
+The deployment file provided by OpenNebula (``/usr/share/one/oneprovision/examples/example_packet.yaml``) needs some changes in order to deploy the hosts.
 
-First of all, you need to add your Packet credentials and project ID:
+First of all, you need to create a provider using your Packet credentials and facility:
 
 - packet_token
 - packet_project
+- facility
 
-In the template you have to change ``******`` by a valid token. You can create one in your Packer user portal. And to get the project ID just go to project settings tab in Packet.
+.. prompt:: bash $ auto
+
+    $ cat packet.yaml
+    ---
+    name: "packet"
+    connection:
+        packet_token:   "**********"
+        packet_project: "**********"
+        facility:       "ams1"
+
+    $ oneprovider create packet.yaml
+    ID: 1
+
+In the template you have to change ``******`` by a valid token. You can create one in your Packet user portal. And to get the project ID just go to project settings tab in Packet.
+
+.. note::
+
+    To get the facility identifier you can use the following command:
+
+    .. prompt:: bash $ auto
+
+        curl -X GET --header 'Accept: application/json' --header 'X-Auth-Token: <YOUR_TOKEN>' 'https://api.equinix.com/metal/v1/facilities'
 
 Then you need to add the hosts you want to deploy. You have to uncomment the Ubuntu or CentOS hosts, in case of CentOS the final result would be the following:
 
@@ -208,16 +240,16 @@ Once the deployment has finished, we can check that all the objects have been co
 .. prompt:: bash $ auto
 
     $ oneprovision host list
-    ID NAME             CLUSTER         ALLOCATED_CPU      ALLOCATED_MEM PROVIDER STAT
-    11 147.75.80.135    PacketClus       0 / 700 (0%)     0K / 7.8G (0%) packet   on
-    10 147.75.80.151    PacketClus       0 / 700 (0%)     0K / 7.8G (0%) packet   on
+    ID NAME             CLUSTER         ALLOCATED_CPU      ALLOCATED_MEM STAT
+    11 147.75.80.135    PacketClus       0 / 700 (0%)     0K / 7.8G (0%) on
+    10 147.75.80.151    PacketClus       0 / 700 (0%)     0K / 7.8G (0%) on
 
     $ oneprovision datastore list
   ID NAME                   SIZE AVA CLUSTERS IMAGES TYPE DS      TM      STAT
  117 PacketCluster-system     0M -   108           0 sys  -       ssh     on
  116 PacketCluster-image     80G 97% 108           0 img  fs      ssh     on
 
-    $ oneprovision vnet list
+    $ oneprovision network list
   ID USER     GROUP    NAME                             CLUSTERS   BRIDGE   LEASES
   22 oneadmin oneadmin PacketCluster-public             108        onebr22       0
   21 oneadmin oneadmin PacketCluster-private            108        vxbr100       0

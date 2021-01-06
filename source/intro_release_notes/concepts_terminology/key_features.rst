@@ -29,9 +29,11 @@ OpenNebula offers a **simple but feature-rich and flexible solution** to build a
 
 -  Volume and network hotplugging
 
--  :ref:`Disk snapshot capabilities <vm_guide_2_disk_snapshots>` and :ref:`disk resizing <vm_guide2_resize_disk>` for KVM and LXD instances
+-  :ref:`Disk snapshot capabilities <vm_guide_2_disk_snapshots>` and :ref:`disk resizing <vm_guide2_resize_disk>` for KVM, LXD and Firecracker instances
 
-- LXD Containers are treated the same way as VMs in OpenNebula and support most of the VM features.
+- LXD Containers are treated the same way as VMs in OpenNebula and support most of the VM features
+
+- Firecracker MicroVMs are treated the same way as VMs in OpenNebula and support most of the VM features
 
 
 **VIRTUAL NETWORK MANAGEMENT**
@@ -42,7 +44,7 @@ OpenNebula offers a **simple but feature-rich and flexible solution** to build a
 
 - :ref:`Virtual routers <vrouter>`
 
-- :ref:`Security Groups <security_groups>` to define firewall rules and apply them to KVM and LXD instances
+- :ref:`Security Groups <security_groups>` to define firewall rules and apply them to KVM, LXD, Firecracker and vCenter instances
 
 
 **APPLICATION CONFIGURATION AND INSIGHT**
@@ -136,7 +138,7 @@ OpenNebula offers a **simple but feature-rich and flexible solution** to build a
 
 - :ref:`Resource quota management <quota_auth>` to track and limit computing, storage and networking resource utilization
 
-- Support for multiple data stores to balance I/O operations between storage servers, or to define different SLA policies (e.g. backup) and performance features for different KVM VM types or users
+- Support for multiple data stores to balance I/O operations between storage servers, or to define different SLA policies (e.g. backup) and performance features for different types or users using KVM, LXD or Firecracker based virtualization.
 
 - :ref:`PCI passthrough <kvm_pci_passthrough>` available for KVM VMs that need consumption of raw GPU devices
 
@@ -154,7 +156,7 @@ OpenNebula offers a **simple but feature-rich and flexible solution** to build a
 
 - Persistent database backend with support for high availability configurations
 
-- :ref:`Configurable behavior in the event of host or KVM/LXD instance failure <ftguide>` to provide easy to use and cost-effective failover solutions
+- :ref:`Configurable behavior in the event of host or KVM/LXD/Firecracker instance failure <ftguide>` to provide easy to use and cost-effective failover solutions
 
 
 **CLOUD BURSTING**
@@ -166,11 +168,11 @@ OpenNebula offers a **simple but feature-rich and flexible solution** to build a
 
 - Fully platform independent
 
-- Hypervisor agnostic with broad hypervisor support (:ref:`KVM <kvmg>`, :ref:`LXD <lxdmg>` and :ref:`VMware vCenter <vcenterg>`) and centralized management of environments with multiple hypervisors
+- Hypervisor agnostic with broad hypervisor support (:ref:`KVM <kvmg>`, :ref:`LXD <lxdmg>`, :ref:`Firecracker <fcmg>` and :ref:`VMware vCenter <vcenterg>`) and centralized management of environments with multiple hypervisors
 
 - :ref:`Broad support for commodity and enterprise-grade hypervisor, monitoring, storage, networking and user management services <uspng>`
 
-- `Packages for major Linux distributions <http://opennebula.org/software/>`__
+- `Packages for major Linux distributions <http://opennebula.io/use/>`__
 
 
 **CUSTOMIZATION AND INTEGRATION**
@@ -203,7 +205,7 @@ OpenNebula offers a **simple but feature-rich and flexible solution** to build a
 
 - All key functionalities for enterprise cloud computing, storage and networking in a :ref:`single install <frontend_installation>`
 
-- Long term stability and performance through a :ref:`single integrated patching and upgrade process <upgrade_overview>`
+- Long term stability and performance through a single integrated patching and :ref:`upgrade process <upgrade>`.
 
 - :ref:`Automatic import of existing VMs <import_wild_vms>` running in local hypervisors and public clouds for hybrid cloud computing
 
@@ -214,16 +216,16 @@ OpenNebula offers a **simple but feature-rich and flexible solution** to build a
 
 **QUALITY ASSURANCE**
 
-- `Internal quality assurance process for functionality, scalability, performance, robustness and stability <http://opennebula.org/software/testing/>`__
+- `Internal quality assurance process for functionality, scalability, performance, robustness and stability <https://github.com/OpenNebula/one/wiki/Quality-Assurance>`__
 
-- `Technology matured through an active and engaged large community <http://opennebula.org/community/>`__
+- `Technology matured through an active and engaged large community <http://opennebula.io/community-champions>`__
 
 - Scalability, reliability and performance tested on many massive scalable production deployments consisting of hundreds of thousands of cores and VMs
 
 
 **PRODUCT SUPPORT**
 
-- `Best-effort community support <http://forum.opennebula.org>`__
+- `Best-effort community support <http://forum.opennebula.io>`__
 
 - `SLA-based commercial support directly from the developers <http://opennebula.pro>`__
 

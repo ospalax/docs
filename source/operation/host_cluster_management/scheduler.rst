@@ -58,11 +58,13 @@ The behavior of the scheduler can be tuned to adapt it to your infrastructure wi
 
 * ``MESSAGE_SIZE``: Buffer size in bytes for XML-RPC responses.
 * ``ONE_XMLRPC``: URL to connect to the OpenNebula daemon (oned) (Default: http://localhost:2633/RPC2)
-* ``SCHED_INTERVAL``: Seconds between two scheduling actions (Default: 30)
+* ``HTTP_PROXY``: Proxy for ONE_XMLRPC (Default empty)
+* ``SCHED_INTERVAL``: Seconds between two scheduling actions (Default: 15)
 * ``MAX_VM``: Maximum number of Virtual Machines scheduled in each scheduling action (Default: 5000). Use 0 to schedule all pending VMs each time.
 * ``MAX_DISPATCH``: Maximum number of Virtual Machines actually dispatched to a host in each scheduling action (Default: 30)
 * ``MAX_HOST``: Maximum number of Virtual Machines dispatched to a given host in each scheduling action (Default: 1)
 * ``LIVE_RESCHEDS``: Perform live (1) or cold migrations (0) when rescheduling a VM
+* ``COLD_MIGRATION_MODE``: In case of cold migration, defines the type of VM migration. Possible values are 0 save, 1 poweroff, 2 poweroff hard. :ref:`See one.vm.migrate <one_vm_migrate>`
 * ``MEMORY_SYSTEM_DS_SCALE``: This factor scales the VM usage of the system DS with the memory size. This factor can be use to make the scheduler consider the overhead of checkpoint files: system_ds_usage = system_ds_usage + memory_system_ds_scale * memory
 * ``DIFFERENT_VNETS``: When set (YES) the NICs of a VM will be forced to be in different Virtual Networks.
 
@@ -250,7 +252,7 @@ Fixed Policy
 
 VM Policies
 -----------
-VMs are dispatched to hosts in a FIFO fashion. You can alter this behavior by giving each VM (or the base template) a priority. Just set the attribute ``USER_PRIOTIY`` to sort the VMs based on this attribute, and so alter the dispatch order. The ``USER_PRIORITY`` can be set for example in the VM templates for a user group if you want prioritize those templates. Note that this priority is also used for rescheduling.
+VMs are dispatched to hosts in a FIFO fashion. You can alter this behavior by giving each VM (or the base template) a priority. Just set the attribute ``USER_PRIORITY`` to sort the VMs based on this attribute, and so alter the dispatch order. The ``USER_PRIORITY`` can be set for example in the VM templates for a user group if you want prioritize those templates. Note that this priority is also used for rescheduling.
 
 Limiting the Resources Exposed by a Host
 ========================================

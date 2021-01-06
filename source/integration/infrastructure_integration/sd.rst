@@ -17,14 +17,14 @@ Located under ``/var/lib/one/remotes/datastore/<ds_mad>``
 -  **cp**: copies/dumps the image to the datastore
 
    -  **ARGUMENTS**: ``datastore_image_dump image_id``
-   -  **RETURNS**: ``image_source size``
+   -  **RETURNS**: ``image_source image_format``
    -  ``datastore_image_dump`` is an XML dump of the driver action encoded in Base 64. See a decoded :ref:`example <sd_dump>`.
    -  ``image_source`` is the image source which will be later sent to the transfer manager
 
 -  **mkfs**: creates a new empty image in the datastore
 
    -  **ARGUMENTS**: ``datastore_image_dump image_id``
-   -  **RETURNS**: ``image_source size``
+   -  **RETURNS**: ``image_source``
    -  ``datastore_image_dump`` is an XML dump of the driver action encoded in Base 64. See a decoded :ref:`example <sd_dump>`.
    -  ``image_source`` is the image source which will be later sent to the transfer manager.
 
@@ -107,7 +107,7 @@ Action scripts for generic image datastores:
    -  ``host`` is the target host to deploy the VM
    -  ``remote_system_ds`` is the path for the system datastore in the host
    -  ``vm_id`` is the id of the VM
-   -  ``ds_id`` is the target datastore (the system datastore)
+   -  ``ds_id`` is the source datastore (the images datastore)
 
 -  **ln**: Links the image from the datastore (persistent images)
 
@@ -117,7 +117,7 @@ Action scripts for generic image datastores:
    -  ``host`` is the target host to deploy the VM
    -  ``remote_system_ds`` is the path for the system datastore in the host
    -  ``vm_id`` is the id of the VM
-   -  ``ds_id`` is the target datastore (the system datastore)
+   -  ``ds_id`` is the source datastore (the images datastore)
 
 -  **mvds**: moves an image back to its datastore (persistent images)
 
@@ -212,7 +212,7 @@ Action scripts needed when the TM is used for the system datastore:
    -  ``host`` is the target host to deploy the VM
    -  ``remote_system_ds`` is the path for the system datastore in the host
    -  ``vm_id`` is the id of the VM
-   -  ``ds_id`` is the target datastore (the system datastore)
+   -  ``ds_id`` is the source datastore (the images datastore) for normal disks or target datastore (the system datastore) for volatiled disks
 
 -  **mkimage**: creates an image on-the-fly bypassing the datastore/image workflow
 

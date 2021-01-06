@@ -6,20 +6,25 @@ KVM Node Installation
 
 This page shows you how to install OpenNebula from the binary packages.
 
-Using the packages provided on our site is the recommended method, to ensure the installation of the latest version and to avoid possible package divergences in different distributions. There are two alternatives here: you can add **our package repositories** to your system, or visit the `software menu <http://opennebula.org/software>`__ to **download the latest package** for your Linux distribution.
+Using the packages provided on our site is the recommended method, to ensure the installation of the latest version and to avoid possible package divergences in different distributions. There are two alternatives here: you can add **our package repositories** to your system, or visit the `software menu <http://usela.io/use>`__ to **download the latest package** for your Linux distribution.
 
 .. _kvm_repo:
 
 Step 1. Add OpenNebula Repositories
 ===================================
 
-.. include:: ../repositories.txt
+Refer to this :ref:`guide <repositories>` to add the community or enterprise edition repositories.
 
 Step 2. Installing the Software
 ===============================
 
 Installing on CentOS/RHEL
 -------------------------
+
+.. include:: ../opennebula_installation/epel.txt
+
+Install Node Package
+^^^^^^^^^^^^^^^^^^^^
 
 Execute the following commands to install the node package and restart libvirt to use the OpenNebula provided configuration file:
 
@@ -28,8 +33,8 @@ Execute the following commands to install the node package and restart libvirt t
     $ sudo yum install opennebula-node-kvm
     $ sudo systemctl restart libvirtd
 
-Newer QEMU/KVM (only CentOS/RHEL 7)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Optional: Newer QEMU/KVM (only CentOS/RHEL 7)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You may benefit from using the more recent and feature-rich enterprise QEMU/KVM release. The differences between the base (``qemu-kvm``) and enterprise (``qemu-kvm-rhev`` on RHEL or ``qemu-kvm-ev`` on CentOS) packages are described on the `Red Hat Customer Portal <https://access.redhat.com/solutions/629513>`__.
 

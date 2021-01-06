@@ -1,15 +1,17 @@
 .. _ddc:
 
-========================
-Infrastructure Provision
-========================
+==================================
+Distributed Edge Provisioning
+==================================
 
 .. toctree::
    :maxdepth: 2
 
    Overview <overview>
-   OneProvision Installation <install>
-   Default Infrastructure Provision <default>
-   Customized Infrastructure Provision <custom/index>
+   Introduction and Installation <install>
+   Cluster Provisioning Example <default>
    OneProvision Usage <usage>
-   Provision and Configuration Reference <reference/index>
+   Provider <provider>
+   Provision Template <template/index>
+   Provision Drivers <drivers/index>
+   Automated Configuration <config/index>

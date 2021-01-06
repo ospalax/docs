@@ -291,7 +291,7 @@ Once the Virtual Networks are setup, they can be made available to users based o
 Virtual Network can be used by VMs in two different ways:
 
 - Manual selection: NICs in the VMs are attached to a specific Virtual Network.
-- Automatic selection: Virtual networks are scheduled like other resources needed by the VM (like hosts or datastores). 
+- Automatic selection: Virtual networks are scheduled like other resources needed by the VM (like hosts or datastores).
 
 Manual Attach a Virtual Machine to a Virtual Network
 ----------------------------------------------------
@@ -331,7 +331,7 @@ To set the automatic selection mode, simply add the attribute ``NETWORK_MODE = "
 
     NIC = [ NETWORK_MODE = "auto" ]
 
-Also you can add SCHED_REQUIREMENTS and SCHED_RANK when this mode is activated. This will let you specify which networks can be used for a specific NIC (``SCHED_REQUIREMENTS``) and what are you preferences (``SCHED_RANK``) to select a network among the suitable ones. 
+Also you can add SCHED_REQUIREMENTS and SCHED_RANK when this mode is activated. This will let you specify which networks can be used for a specific NIC (``SCHED_REQUIREMENTS``) and what are you preferences (``SCHED_RANK``) to select a network among the suitable ones.
 
 .. code::
 
@@ -339,11 +339,11 @@ Also you can add SCHED_REQUIREMENTS and SCHED_RANK when this mode is activated. 
             SCHED_REQUIREMENTS = "TRAFFIC_TYPE = \"public\" & INBOUND_AVG_BW<1500",
             SCHED_RANK = "-USED_LEASES" ]
 
-In this case the scheduler will look for any Virtual Network in the selected cluster with a custom tag ``TRAFFIC_TYPE`` to be equal to ``public`` and ``INBOUND_AVG_BW`` less than 1500. Among all the networks that satisfy these requirements the scheduler will select that with most free leases. 
+In this case the scheduler will look for any Virtual Network in the selected cluster with a custom tag ``TRAFFIC_TYPE`` to be equal to ``public`` and ``INBOUND_AVG_BW`` less than 1500. Among all the networks that satisfy these requirements the scheduler will select that with most free leases.
 
 .. _vgg_vn_alias:
 
-Attach a Virtual Machine to a NIC Alias
+Attach a NIC Alias to a Virtual Machine
 ---------------------------------------
 
 To attach a NIC alias to a VM you need to refer the parent NIC by its ``NAME`` attribute:
@@ -379,7 +379,7 @@ NSX Specific
 
 This section describes how to create a vnet in OpenNebula that reference a logical switch in NSX-V or NSX-T.
 
-.. warning:: NSX_STATUS must be OK before a logical switch created, imported or deleted.
+.. warning:: In order to create, delete or import NSX networks, credentials must be set before.
 
 
 Creating a new **logical switch**
@@ -425,10 +425,10 @@ Creating from Sunstone
 
       .. figure:: /images/nsx_create_network_07.png
 
-    - To check that the network was imported correctly, the next attributes should have values
+    - To check that the network was created correctly, the next attributes should have values
 
         - VCENTER_NET_REF: network id on vcenter
-        - VCENTER_PORTGROUP_TYPE: “Opaque Network” or “Distributed Port Group”
+        - VCENTER_PORTGROUP_TYPE: “Opaque Network” or “NSX-V”
         - NSX_ID: network id on NSX
 
       .. figure:: /images/nsx_create_network_07b.png
@@ -507,9 +507,9 @@ Importing existing **logical switches**
 ---------------------------------------
 This section describes how to import logical switches, for both NSX-T and NSX-V. The procedure is the same as other vcenter networks.
 
-In the list of available networks to import, it will only show NSX-V and NSX-T (Opaque networks) if NSX_STATUS = OK.
+In the list of available networks to import, it will only show NSX-V and NSX-T (Opaque networks) if NSX_PASSWORD is set.
 
-In any case, all NSX networks (represented in vCenter) can be listed without having the host attribute NSX_STATUS = OK using the following CLI command:
+In any case, all NSX networks (represented in vCenter) can be listed using the following CLI command:
 
 .. code::
 
@@ -546,6 +546,16 @@ Importing from CLI
 ^^^^^^^^^^^^^^^^^^
 The import process from CLI is the same as others vcenter networks. For more details go to: :ref:`import_network_onevcenter`
 
+Importing existing **logical switches** when a vm is imported
+-------------------------------------------------------------
+OpenNebula allows you import NSX networks attached to vms in two ways:
+
+    - Having NSX credentials
+    - Without NSX credentials
+
+In the first mode the imported network should have NSX_ID, allowing this network be able to use other NSX features as Security Groups.
+In the second mode the imported network won't have a NSX_ID, so other NSX features will not be available for these networks.
+
 Deleting **logical switches**
 -----------------------------
 The process of deleting a logical switch is the same as others vnets.
@@ -566,3 +576,5 @@ At this time not all attributes are available at creation time:
     - OpenNebula cannot change IP discovery and MAC learning.
 
 NSX-V creates a standard port group called "none" when creating an EDGE or DLR. This network has no host attached so OpenNebula will not be able to import it.
+
+Imported NSX networks without NSX_ID must be manually updated to introduce this attribute or deleted and imported with NSX credentials.

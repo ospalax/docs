@@ -510,6 +510,11 @@ Importing running Virtual Machines
 
 Once a vCenter cluster is monitored, OpenNebula will display any existing VM as Wild. These VMs can be imported and managed through OpenNebula once the host has been successfully acquired.
 
+*Requirements*
+
+* **Before** you import a Wild VM you must have imported the datastores where the VM's hard disk files are located as it was explained before. OpenNebula requires the datastores to exist before the image that represents an existing virtual hard disk is created.
+* Running VM cannot have snapshots. Please remove them before importing.
+
 In the command line we can list wild VMs with the one host show command:
 
 .. prompt:: text $ auto
@@ -536,7 +541,11 @@ In Sunstone we have the Wild tab in the host's information:
 
 VMs in running state can be imported, and also VMs defined in vCenter that are not in Power On state (this will import the VMs in OpenNebula as in the poweroff state).
 
-.. important:: **Before** you import a Wild VM you must have imported the datastores where the VM's hard disk files are located as it was explained before. OpenNebula requires the datastores to exist before the image that represents an existing virtual hard disk is created.
+.. _vcenter_wild_vm_nic_disc_import:
+
+A Wild VM import process creates images to represent the VM disks as well as new Virtual Networks if they are not already represented. If a Virtual Network exists already in OpenNebula, a network lease (IP/MAC) is requested for each IP reported for the VM by the VMware tools. If no AR contains the IP address space of the IP reported by the VM, a new AR is created and a lease requested. If the same NIC in the vCenter VM reports more than one IP, this is represented using NIC_ALIAS.
+
+It is important to clarify that in the event that a VM Template has multiple NICs and NIC ALIAS, they will be imported during this process.
 
 .. warning:: While the VM is being imported, OpenNebula will inspect the virtual disks and virtual nics and it will create images and virtual networks referencing the disks and port-groups used by the VM so the process may take some time, please be patient.
 

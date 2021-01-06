@@ -7,7 +7,7 @@ Front-end Installation
 
 This page shows you how to install OpenNebula from the binary packages.
 
-Using the packages provided on our site is the recommended method, to ensure the installation of the latest version, and to avoid possible package divergences with different distributions. There are two alternatives here: you can add **our package repositories** to your system, or visit the `software menu <http://opennebula.org/software>`__ to **download the latest package** for your Linux distribution.
+Using the packages provided on our site is the recommended method, to ensure the installation of the latest version, and to avoid possible package divergences with different distributions. There are two alternatives here: you can add **our package repositories** to your system, or visit the `software menu <http://opennebula.io/use>`__ to **download the latest package** for your Linux distribution.
 
 If there are no packages for your distribution, head to the :ref:`Building from Source Code guide <compile>`.
 
@@ -52,7 +52,7 @@ After the changes, you should reboot the machine.
 Step 2. Add OpenNebula Repositories
 ================================================================================
 
-.. include:: ../repositories.txt
+Refer to this :ref:`guide <repositories>` to add the community or enterprise edition repositories.
 
 Step 3. Installing the Software
 ================================================================================
@@ -60,65 +60,37 @@ Step 3. Installing the Software
 Installing on CentOS/RHEL
 -------------------------
 
-OpenNebula depends on packages which are not in the base repositories.
-The following repositories have to be enabled before installation:
-
-* only RHEL 7: **optional** and **extras** RHEL repositories
-* `EPEL <https://fedoraproject.org/wiki/EPEL>`__ (Extra Packages for Enterprise Linux)
-
-Repository EPEL
-^^^^^^^^^^^^^^^
-
-On **CentOS**, enabling EPEL is as easy as installation of the package with additional repository configuration:
-
-.. prompt:: bash # auto
-
-    # yum install epel-release
-
-
-On **RHEL 7**, you enable EPEL by running:
-
-.. note:: RHEL 7 **optional** and **extras** repositories must be configured first.
-
-.. prompt:: bash # auto
-
-    # subscription-manager repos --enable rhel-7-server-optional-rpms
-    # subscription-manager repos --enable rhel-7-server-extras-rpms
-    # rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-
-On **RHEL 8**, you enable EPEL by running:
-
-.. prompt:: bash # auto
-
-    # rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+.. include:: epel.txt
 
 Install OpenNebula
 ^^^^^^^^^^^^^^^^^^
 
-Install the CentOS/RHEL OpenNebula Front-end with packages from **our repository** by executing the following as root:
+Install the CentOS/RHEL/Fedora OpenNebula Front-end with packages from **our repository** by executing the following as root:
 
 .. prompt:: bash # auto
 
     # yum install opennebula-server opennebula-sunstone opennebula-ruby opennebula-gate opennebula-flow
 
-**CentOS/RHEL Package Description**
+**CentOS/RHEL/Fedora Package Description**
 
 The packages for the OpenNebula frontend and the virtualization host are as follows:
 
 * **opennebula**: Command Line Interface.
-* **opennebula-server**: Main OpenNebula daemon, scheduler, etc.
+* **opennebula-server**: OpenNebula Daemon and Scheduler.
 * **opennebula-sunstone**: :ref:`Sunstone <sunstone>` (the GUI) and the :ref:`EC2 API <introc>`.
 * **opennebula-gate**: :ref:`OneGate <onegate_overview>` server that enables communication between VMs and OpenNebula.
 * **opennebula-flow**: :ref:`OneFlow <oneflow_overview>` manages services and elasticity.
 * **opennebula-provision**: :ref:`OneProvision <ddc_overview>` deploys new clusters on remote bare-metal cloud providers.
-* **opennebula-node-kvm**: Meta-package that installs the oneadmin user, libvirt and kvm.
-* **opennebula-common**: Common files for OpenNebula packages.
-* **opennebula-rubygems**: All Ruby gem dependencies.
+* **opennebula-node-kvm**: Dependencies and configurations for KVM hypervisor node.
+* **opennebula-node-firecracker**: Dependencies and configurations for Firecracker hypervisor node.
+* **opennebula-common**: Shared content for OpenNebula packages.
+* **opennebula-common-onecfg**: Helpers for onecfg tool.
+* **opennebula-rubygems**: Bundled Ruby gem dependencies.
 * **opennebula-debuginfo**: Package with debug information.
 * **opennebula-ruby**: Ruby Bindings.
 * **opennebula-java**: Java Bindings.
-* **python-pyone**: Python Bindings.
-* **python3-pyone**: Python3 Bindings.
+* **python-pyone**: Python 2 Bindings (not on Fedora).
+* **python3-pyone**: Python 3 Bindings.
 
 .. note::
 
@@ -138,23 +110,25 @@ To install OpenNebula on a Debian/Ubuntu Front-end using packages from **our rep
 
 These are the packages available for these distributions:
 
-* **opennebula**: OpenNebula Daemon.
-* **opennebula-common**: Provides the user and common files.
-* **opennebula-tools**: Command Line interface.
-* **opennebula-sunstone**: :ref:`Sunstone <sunstone>` (the GUI).
+* **opennebula**: OpenNebula Daemon and Scheduler.
+* **opennebula-common**: Shared content for OpenNebula packages.
+* **opennebula-common-onecfg**: Helpers for onecfg tool.
+* **opennebula-tools**: Command Line Interface.
+* **opennebula-sunstone**: :ref:`Sunstone <sunstone>` (the GUI) and the :ref:`EC2 API <introc>`.
 * **opennebula-gate**: :ref:`OneGate <onegate_overview>` server that enables communication between VMs and OpenNebula.
 * **opennebula-flow**: :ref:`OneFlow <oneflow_overview>` manages services and elasticity.
 * **opennebula-provision**: :ref:`OneProvision <ddc_overview>` deploys new clusters on remote bare-metal cloud providers.
-* **opennebula-node**: Prepares a node as an opennebula KVM node.
-* **opennebula-node-lxd**: Prepares a node as an opennebula LXD node.
-* **opennebula-lxd-snap**: Installs LXD snap (only on Ubuntu 16.04 and 18.04).
-* **opennebula-rubygems**: All Ruby gem dependencies.
+* **opennebula-node**: Dependencies and configurations for KVM hypervisor node.
+* **opennebula-node-firecracker**: Dependencies and configurations for Firecracker hypervisor node.
+* **opennebula-node-lxd**: Dependencies and configurations for LXD hypervisor node.
+* **opennebula-lxd-snap**: Meta-package to install LXD snap (only on Ubuntu 16.04 and 18.04).
+* **opennebula-rubygems**: Bundled Ruby gem dependencies.
 * **opennebula-dbgsym**: Package with debug information.
-* **ruby-opennebula**: Ruby API.
-* **libopennebula-java**: Java API.
-* **libopennebula-java-doc**: Java API Documentation.
-* **python-pyone**: Python API.
-* **python3-pyone**: Python3 Bindings.
+* **ruby-opennebula**: Ruby Bindings.
+* **libopennebula-java**: Java Bindings.
+* **libopennebula-java-doc**: Java Bindings Documentation.
+* **python-pyone**: Python 2 Bindings (not on Ubuntu 20.04 and later).
+* **python3-pyone**: Python 3 Bindings.
 
 .. note::
 
@@ -183,7 +157,7 @@ Step 4. Ruby Runtime Installation (Optional)
 
         # export GEM_PATH=/usr/share/one/gems/
         # export GEM_HOME=/usr/share/one/gems/
-        # gem install --no-document --conservative $GEM_NAME
+        # gem install --install-dir /usr/share/one/gems/ --bindir /usr/share/one/gems/bin/ --no-document --conservative $GEM_NAME
 
 Some OpenNebula components need Ruby libraries. OpenNebula provides a script that installs the required gems as well as some development library packages needed.
 
