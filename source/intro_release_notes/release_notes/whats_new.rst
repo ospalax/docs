@@ -22,6 +22,8 @@ OpenNebula Core
 - `VM terminate, poweroff and undeploy hard overrides their soft counterpart <https://github.com/OpenNebula/one/issues/2586>`__.
 - `AR inherits IPAM_MAD from VNET <https://github.com/OpenNebula/one/issues/2593>`__.
 - `INHERIT_VNET_ATTR, INHERIT_DATASTORE_ATTR and INHERIT_IMAGE_ATTR allows inherit of complex type <https://github.com/OpenNebula/one/issues/4090>`__.
+- `Allow 'onevm disk-saveas' in undeployed and stopped state <https://github.com/OpenNebula/one/issues/1112>`__.
+- `Terminate oned in HA in case of lost DB connection <https://github.com/OpenNebula/one/issues/5186>`__.
 
 Storage
 ================================================================================
@@ -39,9 +41,10 @@ Sunstone
 ================================================================================
 - VM info autorefresh with ZeroMQ. Check :ref:`this <autorefresh>` for more information.
 - Add option to disable network configuration for service template instantiation. Check more information :ref:`here <suns_views_custom>`.
-- Registration time has been added to :ref:`service templates <appflow_elasticity>`.
+- Service registration time has been added to :ref:`service templates <appflow_elasticity>`. Available in Sunstone, enabled by default in :ref:`services instances views <suns_views>`.
 - Added remove template and images when delete a service. Check :ref:`this <appflow_use_cli_delete_service_template>`.
-
+- Add option to automatic deletion to services when all associated VMs terminated. Check more information :ref:`here <appflow_use_cli_automatic_delete>`.
+- Added VM name to :ref:`VNC Guacamole connections <requirements_guacamole_vnc_sunstone>`.
 
 Scheduler
 ================================================================================
@@ -83,6 +86,8 @@ Distributed Edge Provisioning
 Packaging
 ================================================================================
 
+- OpenNebula package names unified across distributions, see :ref:`here <compatibility_pkg>`.
+
 KVM
 ===
 
@@ -113,3 +118,4 @@ Other Issues Solved
 ================================================================================
 - Allow live migration over SSH for KVM `<http://github.com/OpenNebula/one/issues/1644>`__.
 - Make automatic LDAP group admin mapping configurable `<http://github.com/OpenNebula/one/issues/5210>`__.
+- Fix virtual machine tabs not working on Sunstone`<http://github.com/OpenNebula/one/issues/5223>`__.

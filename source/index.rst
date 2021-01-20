@@ -2,16 +2,20 @@
 OpenNebula 5.13.80 Documentation
 ================================================================================
 
+Here comes description ...
+
 .. _entry_point:
 
 .. toctree::
    :maxdepth: 2
 
-   Introduction and Release Notes <intro_release_notes/index>
-   Deployment Guide <deployment/index>
-   Operation Guide <operation/index>
-   Advanced Components Guide <advanced_components/index>
-   Integration Guide <integration/index>
+   Overview <overview/index>
+   Quick Start <quick_start/index>
+   Operations Guide <operations_guide/index>
+   Configuration Guide <configuration_guide/index>
+   Deployment Guide <deployment_guide/index>
+   Development Guide <development_guide/index>
+   Release Notes <intro_release_notes/index>
 
 .. raw:: html
    :file: toc.html
