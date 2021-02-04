@@ -1,8 +1,8 @@
 .. _authentication:
 
-====================
-Authentication Setup
-====================
+============================
+Authentication Configuration
+============================
 
 .. toctree::
    :maxdepth: 2

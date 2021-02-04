@@ -24,6 +24,7 @@ OpenNebula Core
 - `INHERIT_VNET_ATTR, INHERIT_DATASTORE_ATTR and INHERIT_IMAGE_ATTR allows inherit of complex type <https://github.com/OpenNebula/one/issues/4090>`__.
 - `Allow 'onevm disk-saveas' in undeployed and stopped state <https://github.com/OpenNebula/one/issues/1112>`__.
 - `Terminate oned in HA in case of lost DB connection <https://github.com/OpenNebula/one/issues/5186>`__.
+- `Unique VM identification, allow to force uuid to VM <https://github.com/OpenNebula/one/issues/1048>`__.
 
 Storage
 ================================================================================
@@ -32,6 +33,7 @@ Storage
 
 Networking
 ================================================================================
+- :ref:`VXLAN attributes<vxlan>` can be defined per network as well as system-wide in OpenNebulaNetwork.conf file.
 
 Authentication
 ================================================================================
@@ -39,12 +41,20 @@ Authentication
 
 Sunstone
 ================================================================================
-- VM info autorefresh with ZeroMQ. Check :ref:`this <autorefresh>` for more information.
+- VM info autorefresh with ZeroMQ. Check for more information :ref:`here <autorefresh>`.
 - Add option to disable network configuration for service template instantiation. Check more information :ref:`here <suns_views_custom>`.
 - Service registration time has been added to :ref:`service templates <appflow_elasticity>`. Available in Sunstone, enabled by default in :ref:`services instances views <suns_views>`.
-- Added remove template and images when delete a service. Check :ref:`this <appflow_use_cli_delete_service_template>`.
+- Added remove template and images when delete a service. Check form more information :ref:`here <appflow_use_cli_delete_service_template>`.
 - Add option to automatic deletion to services when all associated VMs terminated. Check more information :ref:`here <appflow_use_cli_automatic_delete>`.
 - Added VM name to :ref:`VNC Guacamole connections <requirements_guacamole_vnc_sunstone>`.
+- Allow to attach external NIC alias. Check more information :ref:`here <template_network_section>`.
+- Added states to role actions buttons. Check for more information :ref:`here <appflow_use_cli_life_cycle>`.
+- Add EXTERNAL NIC attribute to VM IPs on Sunstone. Check more information :ref:`here <template_network_section>`.
+- Add error message for asynchronous actions on Sunstone. Check more information :ref:`here <vm_life_cycle_and_states>`.
+- Update Sunstone Host and VMs datatable columns. Check more information :ref:`here <suns_views>`.
+- Added option to enable/disable users on Sunstone. Check more information :ref:`here <manage_users>`.
+- Add support to avoid importing VM Template from the marketplace. Check more information :ref:`here <marketapp_download>`.
+- Numa aware placement for vCenter. Check more information :ref:`here <numa>`.
 
 Scheduler
 ================================================================================
@@ -98,6 +108,9 @@ VMware Virtualization driver
 ============================
 
 - Import secondary IPs as a NIC_ALIAS in OpenNebula, see :ref:`here <vcenter_wild_vm_nic_disc_import>`.
+- Use a specific VM Templates in vCenter when import marketplace apps, see :ref:`here <marketapp_download>`.
+- Assign VCENTER_VM_FOLDER automatically per user or group see :ref:`here <vm_template_definition_vcenter>`.
+- Fix import networks in vCenter with special characters :ref:`Importing vCenter Networks<vcenter_import_networks>`.
 
 Containers
 ==========
@@ -109,6 +122,12 @@ DockerHub
 ==========
 - Dockerfiles used to download images from DockerHub have been moved to external templates so they can be customized. You can find them under ``/usr/share/one/dockerhub`` directory.
 - Export of Docker Hub images into OpenNebula preferably uses FUSE based ext2/3/4 mounts on front-end, instead of kernel native mounts.
+- Add support to create images from Dockerfile specification. Check :ref:`this <dockerfile>` for more information.
+
+MarketPlace
+===========
+
+- Add support for service templates, check :ref:`this <marketapp_import>` for more information.
 
 Hooks
 =====
@@ -119,3 +138,5 @@ Other Issues Solved
 - Allow live migration over SSH for KVM `<http://github.com/OpenNebula/one/issues/1644>`__.
 - Make automatic LDAP group admin mapping configurable `<http://github.com/OpenNebula/one/issues/5210>`__.
 - Fix virtual machine tabs not working on Sunstone`<http://github.com/OpenNebula/one/issues/5223>`__.
+- Fix minimum VMs to scale action on Sunstone`<http://github.com/OpenNebula/one/issues/1019>`__.
+- Fix service scale action in the Cloud View on Sunstone`<http://github.com/OpenNebula/one/issues/5231>`__.

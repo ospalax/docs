@@ -178,6 +178,8 @@ Using Sunstone:
 
 .. _marketapp_download:
 
+.. _marketapp_import:
+
 Importing into Marketplace
 --------------------------------------------------------------------------------
 Marketplaceis support three different types of apps. You can create an app of any type with the **import** operation. This operation is available in Sunstone and CLI.
@@ -232,17 +234,19 @@ These three commands are interactive, although they can run in batch mode (see b
     ID: 443
     ID: 444
 
-+------------------------+----------------------------------------------+
-| Parameter              | Description                                  |
-+========================+==============================================+
-| ``--market market_id`` | Marketplace to import everything.            |
-+------------------------+----------------------------------------------+
-| ``--vmname name``      | Name of the app that is going to be created. |
-+------------------------+----------------------------------------------+
-| ``--yes``              | Import everything.                           |
-+------------------------+----------------------------------------------+
-| ``--no``               | Import just the main template.               |
-+------------------------+----------------------------------------------+
++-----------------------------+----------------------------------------------+
+| Parameter                   | Description                                  |
++=============================+==============================================+
+| ``--market market_id``      | Marketplace to import everything.            |
++-----------------------------+----------------------------------------------+
+| ``--vmname name``           | Name of the app that is going to be created. |
++-----------------------------+----------------------------------------------+
+| ``--yes``                   | Import everything.                           |
++-----------------------------+----------------------------------------------+
+| ``--no``                    | Import just the main template.               |
++-----------------------------+----------------------------------------------+
+| ``--template template_id``  | Use this template with the imported image.   |
++-----------------------------+----------------------------------------------+
 
 You can use the parameter ``--market`` together with ``--yes`` or ``--no`` to run the command in batch mode:
 

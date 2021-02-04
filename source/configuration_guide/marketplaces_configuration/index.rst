@@ -1,8 +1,8 @@
 .. _marketplace:
 
-===========
-MarketPlace
-===========
+==========================
+MarketPlaces Configuration
+==========================
 
 .. toctree::
    :maxdepth: 2
