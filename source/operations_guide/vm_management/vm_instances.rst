@@ -522,7 +522,7 @@ Some of the VM configuration attributes defined in the VM Template can be update
 
 .. warning:: If the VM is running, the action may fail and the context will not be changed. You can try to manualy trigger the action again.
 
-.. note:: Changes on `GRAPHIC` will still require the VM to be restarted despite being updatable.
+.. note:: In running state only changes in CONTEXT take effect immediately, other values may need a VM restart
 
 
 In Sunstone this action is inside the 'Conf' VM panel:
@@ -838,7 +838,7 @@ In the previous example you can see how scheduled actions are added and you can 
 
 +---------+-------------------------------------------------------------------------------------------------------+
 | time    | Time for tha action in secs example: +1209600 is to weeks.                                            |
-|         | .. note:: The order is very important since time adds to the previous scheduled action.               |
+|         | The order is very important since time adds to the previous scheduled action.                         |
 +---------+-------------------------------------------------------------------------------------------------------+
 | color   | Is the color in hexadecimal since the icon will appear in the Vms table                               |
 +---------+-------------------------------------------------------------------------------------------------------+

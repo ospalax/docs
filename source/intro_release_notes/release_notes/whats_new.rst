@@ -60,6 +60,7 @@ Sunstone
 - Added show information of Charters in service list :ref:`here <service_charters>`.
 - Added option to hide schedule actions on VM instantiate. Check more information :ref:`here <suns_views_custom>`.
 - Add new Sunstone labels normalization. Check more information :ref:`here <suns_views_labels_behavior>`.
+- Add option to change boot device when instantiate a VM Template. Check more information :ref:`here <template_os_and_boot_options_section>`.
 
 Scheduler
 ================================================================================
@@ -117,7 +118,8 @@ VMware Virtualization driver
 - Import secondary IPs as a NIC_ALIAS in OpenNebula, see :ref:`here <vcenter_wild_vm_nic_disc_import>`.
 - Use a specific VM Templates in vCenter when import marketplace apps, see :ref:`here <marketapp_download>`.
 - Assign VCENTER_VM_FOLDER automatically per user or group see :ref:`here <vm_template_definition_vcenter>`.
-- Fix import networks in vCenter with special characters :ref:`Importing vCenter Networks<vcenter_import_networks>`.
+- Option to avoid deleting disk not managed in OpenNebula, see :ref:`here <driver_tuning>`.
+- Fix :ref:`import networks <vcenter_import_networks>` in vCenter with special characters.
 
 Containers
 ==========
@@ -142,11 +144,12 @@ Hooks
 
 Other Issues Solved
 ================================================================================
-- Allow live migration over SSH for KVM `<http://github.com/OpenNebula/one/issues/1644>`__.
-- Make automatic LDAP group admin mapping configurable `<http://github.com/OpenNebula/one/issues/5210>`__.
-- Fix virtual machine tabs not working on Sunstone`<http://github.com/OpenNebula/one/issues/5223>`__.
-- Fix minimum VMs to scale action on Sunstone`<http://github.com/OpenNebula/one/issues/1019>`__.
-- Fix service scale action in the Cloud View on Sunstone`<http://github.com/OpenNebula/one/issues/5231>`__.
-- Fix schedule actions via Sunstone unexpected behavior on VMs `<https://github.com/OpenNebula/one/issues/5209>`__.
-- Fix error when create app if OneFlow Server not runnnig `<https://github.com/OpenNebula/one/issues/5227>`__.
-- Fix Sunstone overrides disks when VM Template instantiate XMLRPC API Call `<https://github.com/OpenNebula/one/issues/5238>`__.
+- `Allow live migration over SSH for KVM <http://github.com/OpenNebula/one/issues/1644>`__.
+- `Make automatic LDAP group admin mapping configurable <http://github.com/OpenNebula/one/issues/5210>`__.
+- `Fix virtual machine tabs not working on Sunstone <http://github.com/OpenNebula/one/issues/5223>`__.
+- `Fix minimum VMs to scale action on Sunstone <http://github.com/OpenNebula/one/issues/1019>`__.
+- `Fix service scale action in the Cloud View on Sunstone <http://github.com/OpenNebula/one/issues/5231>`__.
+- `Fix schedule actions via Sunstone unexpected behavior on VMs <https://github.com/OpenNebula/one/issues/5209>`__.
+- `Fix error when create app if OneFlow Server not runnnig <https://github.com/OpenNebula/one/issues/5227>`__.
+- `Fix Sunstone overrides disks when VM Template instantiate XMLRPC API call <https://github.com/OpenNebula/one/issues/5238>`__.
+- `Fix Sunstone doesn't lock and unlock VMs <https://github.com/OpenNebula/one/issues/5200>`__.
