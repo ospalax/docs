@@ -21,7 +21,7 @@ Front-End Components
 +--------------------------+--------------------------------------------------------+-------------------------------------------------------+
 | CentOS                   | 7, 8                                                   | :ref:`Front-End Installation <frontend_installation>` |
 +--------------------------+--------------------------------------------------------+-------------------------------------------------------+
-| Ubuntu Server            | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)                  | :ref:`Front-End Installation <frontend_installation>` |
+| Ubuntu Server            | 18.04 (LTS), 20.04 (LTS)                               | :ref:`Front-End Installation <frontend_installation>` |
 +--------------------------+--------------------------------------------------------+-------------------------------------------------------+
 | Debian                   | 9, 10                                                  | :ref:`Front-End Installation <frontend_installation>` |
 +--------------------------+--------------------------------------------------------+-------------------------------------------------------+
@@ -45,7 +45,7 @@ vCenter Nodes
 +-----------+---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | Component |                Version                |                                                            More information                                                            |
 +===========+=======================================+========================================================================================================================================+
-| vCenter   | 6.0/6.5/6,7, managing ESX 6.0/6.5/6.7 | :ref:`vCenter Node Installation <vcenter_node>`                                                                                        |
+| vCenter   | 6.5/6.7/7.0, managing ESX 6.5/6.7/7.0 | :ref:`vCenter Node Installation <vcenter_node>`                                                                                        |
 +-----------+---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | NSX-T     | 2.4.1+                                | `VMware compatiblity <https://www.vmware.com/resources/compatibility/sim/interop_matrix.php>`__. :ref:`NSX Documentation <nsx_setup>`. |
 +-----------+---------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
@@ -62,7 +62,7 @@ KVM Nodes
 +--------------------------+---------------------------------------------------------+-----------------------------------------+
 | CentOS                   | 7, 8                                                    | :ref:`KVM Driver <kvmg>`                |
 +--------------------------+---------------------------------------------------------+-----------------------------------------+
-| Ubuntu Server            | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)                   | :ref:`KVM Driver <kvmg>`                |
+| Ubuntu Server            | 18.04 (LTS), 20.04 (LTS), 20.10                         | :ref:`KVM Driver <kvmg>`                |
 +--------------------------+---------------------------------------------------------+-----------------------------------------+
 | Debian                   | 9, 10                                                   | :ref:`KVM Driver <kvmg>`                |
 +--------------------------+---------------------------------------------------------+-----------------------------------------+
@@ -73,15 +73,15 @@ KVM Nodes
 LXD Nodes
 --------------------------------------------------------------------------------
 
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
-|        Component        |                          Version                          |             More information            |
-+=========================+===========================================================+=========================================+
-| Ubuntu Server           | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)                     | :ref:`LXD Driver <lxdmg>`               |
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
-| Debian                  | 10                                                        | :ref:`LXD Driver <lxdmg>`               |
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
-| LXD                     | Support for LXD = 3.0.x either snap or system package     | :ref:`LXD Node Installation <lxd_node>` |
-+-------------------------+-----------------------------------------------------------+-----------------------------------------+
++---------------+-------------------------------------------------------+-----------------------------------------+
+|   Component   |                        Version                        |             More information            |
++===============+=======================================================+=========================================+
+| Ubuntu Server | 18.04 (LTS), 20.04 (LTS), 20.10                       | :ref:`LXD Driver <lxdmg>`               |
++---------------+-------------------------------------------------------+-----------------------------------------+
+| Debian        | 10                                                    | :ref:`LXD Driver <lxdmg>`               |
++---------------+-------------------------------------------------------+-----------------------------------------+
+| LXD           | Support for LXD = 3.0.x either snap or system package | :ref:`LXD Node Installation <lxd_node>` |
++---------------+-------------------------------------------------------+-----------------------------------------+
 
 Firecracker Nodes
 --------------------------------------------------------------------------------
@@ -93,7 +93,7 @@ Firecracker Nodes
 +--------------------------+-------------------------------------------------+----------------------------------+
 | CentOS                   | 7, 8                                            | :ref:`Firecracker Driver <fcmg>` |
 +--------------------------+-------------------------------------------------+----------------------------------+
-| Ubuntu Server            | 16.04 (LTS), 18.04 (LTS), 20.04 (LTS)           | :ref:`Firecracker Driver <fcmg>` |
+| Ubuntu Server            | 18.04 (LTS), 20.04 (LTS), 20.10                 | :ref:`Firecracker Driver <fcmg>` |
 +--------------------------+-------------------------------------------------+----------------------------------+
 | Debian                   | 9, 10                                           | :ref:`Firecracker Driver <fcmg>` |
 +--------------------------+-------------------------------------------------+----------------------------------+
@@ -110,29 +110,31 @@ Linux Contextualization Packages
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 |          Component           |              Version              |                                     More information                                     |
 +==============================+===================================+==========================================================================================+
+| Alpine Linux                 | 3.10, 3.11, 3.12, 3.13            | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
++------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
+| ALT Linux                    | p9, Sisyphus                      | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
++------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | Amazon Linux                 | 2                                 | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | CentOS                       | 6, 7, 8, 8 Stream                 | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
-+------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
-| Red Hat Enterprise Linux     | 7, 8                              | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
-+------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
-| Fedora                       | 30, 31, 32                        | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
-+------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
-| openSUSE                     | 15, Tumbleweed                    | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
-+------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
-| SUSE Linux Enterprise Server | 12 SP3                            | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
-+------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
-| ALT Linux                    | p9, Sisyphus                      | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | Debian                       | 8, 9, 10                          | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | Devuan                       | 2                                 | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
-| Ubuntu                       | 14.04, 16.04, 18.04, 19.10, 20.04 | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
-+------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
-| Alpine Linux                 | 3.8, 3.9, 3.10, 3.11              | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
+| Fedora                       | 31, 32, 33                        | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 | FreeBSD                      | 11, 12                            | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
++------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
+| openSUSE                     | 15, Tumbleweed                    | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
++------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
+| Oracle Linux                 | 7, 8                              | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
++------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
+| Red Hat Enterprise Linux     | 7, 8                              | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
++------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
+| SUSE Linux Enterprise Server | 12 SP3                            | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
++------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
+| Ubuntu                       | 14.04, 16.04, 18.04, 20.04, 20.10 | `Linux Contextualization Packages <https://github.com/OpenNebula/addon-context-linux>`__ |
 +------------------------------+-----------------------------------+------------------------------------------------------------------------------------------+
 
 Windows Contextualization Packages
@@ -220,11 +222,6 @@ Sunstone
     Internet Explorer is **not** supported with the Compatibility Mode enabled, since it emulates IE7 which is not supported.
 
 
-VMware Cloud on AWS
---------------------------------------------------------------------------------
-
-OpenNebula has been validated and is supported on VMware Cloud on AWS. Customers can contact the support team through the commercial support portal to know specific configuration and limitations.
-
 .. note:: Generally for all Linux platforms, it is worth noting that Ruby gems should be used from packages shipped with OpenNebula or installed with the :ref:`install_gems <ruby_runtime>` utility. Avoid using Ruby gems versions shipped with your platform.
 
 
@@ -243,17 +240,6 @@ The following applies to all Front-Ends:
 * XML-RPC tuning parameters (``MAX_CONN``, ``MAX_CONN_BACKLOG``, ``KEEPALIVE_TIMEOUT``, ``KEEPALIVE_MAX_CONN`` and ``TIMEOUT``) are only available with packages distributed by us, as they are compiled with a newer xmlrpc-c library.
 * Only **Ruby versions >= 2.0 are supported**.
 
-Ubuntu 16.04 Platform Notes
---------------------------------------------------------------------------------
-
-By default it comes with LXD 2. LXD 3 should be installed from **xenial-backports**. Make sure you have `backports enabled in sources.list <https://help.ubuntu.com/community/UbuntuBackports>`_
-
-.. prompt:: bash # auto
-
-    # apt-get -t xenial-backports install lxd
-
-Resizing **ext4** filesystems of LXD containers will fail due to the outdated ``e2fsck`` package.
-
 CentOS 7.0 Platform Notes
 --------------------------------------------------------------------------------
 
@@ -263,10 +249,10 @@ There is an automatic job that removes all data from ``/var/tmp/``. In order to 
 
 There is a bug in libvirt that the prevents the use of the save/restore mechanism if ``cpu_model`` is set to ``'host-passthrough'`` via ``RAW``. The `work around if needed is described in this issue <http://dev.opennebula.org/issues/4204>`__.
 
-Debian 8
+Debian 9
 --------------------------------------------------------------------------------
 
-Make sure that the packages ``ruby-treetop`` and ``treetop`` are not installed before running ``ìnstall_gems``, as the version of ``treetop`` that comes packaged in Debian 8 is incompatible with OpenNebula. **OneFlow** requires a version >= 1.6.3 for treetop, packages distributed with Debian 8 includes an older version (1.4.5).
+Guacamole does not come with RDP support due to the lack of availabilituy of libfreerdp2 in Debian 9. Hence this functionality won't be present if the front-end runs in this platform.
 
 
 Nodes Platform Notes

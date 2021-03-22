@@ -10,6 +10,5 @@ Here comes description ...
    :maxdepth: 2
 
    OpenNebula Concepts <opennebula_concepts/index>
-   Architecture Blueprints <architecture_blueprints/index>
-   Test Drive <test_drive/index>
+   Cloud Design and Design <cloud_design_and_design/index>
    Solutions and Best Practices <solutions_and_best_practices/index>

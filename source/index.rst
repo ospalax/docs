@@ -1,5 +1,5 @@
 ================================================================================
-OpenNebula 5.13.80 Documentation
+OpenNebula 5.13.85 Documentation
 ================================================================================
 
 Here comes description ...
@@ -11,10 +11,11 @@ Here comes description ...
 
    Overview <overview/index>
    Quick Start <quick_start/index>
-   Operations Guide <operations_guide/index>
-   Configuration Guide <configuration_guide/index>
-   Deployment Guide <deployment_guide/index>
-   Development Guide <development_guide/index>
+   Management and Operations <management_and_operations/index>
+   Installation and Configuration <installation_and_configuration/index>
+   Open Cluster Deployment <open_cluster_deployment/index>
+   VMware Cluster Deployment <vmware_cluster_deployment/index>
+   Integration and Development <integration_and_development/index>
    Release Notes <intro_release_notes/index>
 
 .. raw:: html
