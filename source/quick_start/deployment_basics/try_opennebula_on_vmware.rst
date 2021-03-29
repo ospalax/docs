@@ -156,10 +156,7 @@ The second action needed is to set the **oneadmin account password**. You will n
 
 .. _advanced_login:
 
-And the in the third action, you need to define a **root password.** You won't be using this very often, so write it down somewhere safe. It's your master password to the appliance.
-
-.. image:: /images/set_root_password.png
-    :align: center
+AS a last step you need to define a **root password.** You won't be using this very often, so write it down somewhere safe. It's your master password to the appliance.
 
 This password can be used to access the OpenNebula command line interface, for that you need to ssh to vOneCloud using the `root` account and password. In OS X and Linux environments, simply use `ssh` to log into the root account of vOneCloud's IP. For Windows environments you can use software like `PuTTY <http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html>`__ or even SFTP clients like `WinSCP <https://winscp.net/>`__. Alternatively, open the console of the vOneCloud VM in vCenter and change the tty (Ctrl + Alt + F2).
 
@@ -167,9 +164,6 @@ Step 3. Enjoy the Out-of-the-Box Features
 --------------------------------------------------------------------------------
 
 After opening the Sunstone interface (``http://<appliance_ip>`` with oneadmin credentials) you are now ready to enjoy the out-of-the-box features of OpenNebula!
-
-.. image:: /images/sunstone-login.png
-    :align: center
 
 .. image:: /images/sunstone-main.png
     :align: center
@@ -214,27 +208,13 @@ In the dialog that pops up, select vCenter as Type in the drop-down. You now nee
 | **Password** | Password for the above user                          |
 +--------------+------------------------------------------------------+
 
-.. image:: /images/import_host_getClusters.png
-    :align: center
-
-Select the vCenter cluster to import as OpenNebula Host and click on "Import".
-
-.. image:: /images/import_host_import.png
-    :align: center
-
-After importing you should see a message indicating that the host was successfully imported.
-
-.. image:: /images/import_host_import_success.png
-    :align: center
+Select the vCenter cluster to import as OpenNebula Host and click on "Import". After importing you should see a message indicating that the host was successfully imported.
 
 .. _import_running_vms:
 
 Now it's time to check that the vCenter import has been successful. In ``Infrastructure --> Hosts`` check if vCenter cluster has been imported, and if all the ESX hosts are available in the ESX tab.
 
 .. note:: Take into account that one vCenter cluster (with all its ESX hosts) will be represented as one OpenNebula host. Is not possible to import individual ESX hosts, they need to be grouped in vCenter clusters.
-
-.. image:: /images/import_host_hosts.png
-    :align: center
 
 Step 3. Import Datastores
 ---------------------------------------------------------------------------------
@@ -250,49 +230,23 @@ vCenter datastores hosts VMDK files and other file types so VMs and templates ca
 
 For example, if we have a vcenter datastore called ''nfs'', when we import the vCenter datastore into OpenNebula, two OpenNebula datastores will be created as an Images datastore and as a System datastore pointing to the same vCenter datastore.
 
-First go to ``Storage --> Datastores`` , click on the "+" green icon and click on "Import".
-
-.. image:: /images/import_datastore.png
-    :align: center
-
-Select the Host (vCenter cluster) and click on "Get Datastores".
+First go to ``Storage --> Datastores`` , click on the "+" green icon and click on "Import". Select the Host (vCenter cluster) and click on "Get Datastores".
 
 .. image:: /images/import_datastore_getDatastores.png
     :align: center
 
-Select the datastore to import and click on "Import"
-
-.. image:: /images/import_datastore_import.png
-    :align: center
-
-After importing you should see a message indicating that the datastore was successfully imported.
-
-.. image:: /images/import_datastore_import_success.png
-    :align: center
+Select the datastore to import and click on "Import". After importing you should see a message indicating that the datastore was successfully imported.
 
 .. note:: If the vCenter instance features a read only datastore, please be aware that you should disable the SYSTEM representation of the datastore after importing it to avoid OpenNebula trying to deploy VMs in it.
 
-. _import_networks:
+.. _import_networks:
 
 Step 4. Import Networks
 ---------------------------------------------------------------------------------
 
 Similarly, Port Groups, Distributed Port Groups and NSX-T / NSX-V logical switches, can also be imported using a similar ``Import`` button in ``Network --> Virtual Networks``.
 
-.. image:: /images/import_vnet.png
-    :align: center
-
-Select the Host and click on "Get Networks".
-
-.. image:: /images/import_vnet_getNetworks.png
-    :align: center
-
-Select the network to import and click on "Import".
-
-.. image:: /images/import_vnet_import.png
-    :align: center
-
-After importing you should see a message indicating that the network was successfully imported.
+Select the Host and click on "Get Networks". Select the Network and click on ``Import``. After importing you should see a message indicating that the network was successfully imported.
 
 .. image:: /images/import_vnet_import_success.png
     :align: center
@@ -302,11 +256,6 @@ Virtual Networks can be further refined with the inclusion of different Address 
 - IPv4: Need to define at least starting IP address. MAC address can be defined as well
 - IPv6: Can optionally define starting MAC address, GLOBAL PREFIX and ULA PREFIX
 - Ethernet: Does not manage IP addresses but rather MAC addresses. If a starting MAC is not provided, OpenNebula will generate one.
-
-It is possible to limit the bandwidth of any VM NIC associated to a particular virtual network by using the Inbound/Outbound Traffic QoS values as seen in the next image.
-
-.. image:: /images/limit_network_bw.png
-    :align: center
 
 .. _import_vm_templates:
 
@@ -322,20 +271,7 @@ vCenter **VM Templates** can be imported and reacquired using the ``Import`` but
 .. image:: /images/import_template.png
     :align: center
 
-Select the Host and click on "Get Templates".
-
-.. image:: /images/import_template_getTemplate.png
-    :align: center
-
-Select the template to import and click on "Import".
-
-.. image:: /images/import_template_import.png
-    :align: center
-
-After importing you should see a message indicating that the template was successfully imported.
-
-.. image:: /images/import_template_import_success.png
-    :align: center
+Select the Host and click on "Get Templates". Select the template to import and click on "Import".
 
 .. _operations_on_templates:
 .. _vmtemplates_and_networks:

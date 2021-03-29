@@ -5,16 +5,18 @@
 Management and Operations
 ================================================================================
 
+The Management and Operations Guide provides complete information about how to operate and manage the clusters, hosts, VDCs, users, VMs, networks and provisions of your OpenNebula cloud deployment for true edge, hybrid and multi-cloud computing, using the CLI and the Sunstone graphical interface. To deploy a learning environment, follow the Quick Start Guide. To install a production-ready environment, go to the Installation and Configuration Guide after completing this guide.
+
 .. toctree::
    :maxdepth: 2
 
-   Edge Cluster Management <edge_cluster_management/index>
-   Host and Clusters Management <host_cluster_management/index>
-   Users and Groups Management <users_groups_management/index>
-   Virtual Network Management <network_management/index>
-   Virtual Machine Management <vm_management/index>
-   Guest OS Setup <guest_os_setup/index>
+   Edge Cluster <edge_cluster_management/index>
+   Host and Clusters <host_cluster_management/index>
+   Storage <storage_management/index>
+   Virtual Networks <network_management/index>
+   Virtual Machines <vm_management/index>
    End-User Web Interfaces <end-user_web_interfaces/index>
-   Public Marketplaces <public_marketplaces/index>
-   Multi-VM Service Management <multivm_service_management/index>
+   Multi-VM Service <multivm_service_management/index>
+   Users and Groups <users_groups_management/index>
+   Capacity Planning <capacity_planning/index>
    References <references/index>

@@ -1,1 +1,0 @@
-Refer to this :ref:`guide <repositories>` to add the community or enterprise edition repositories.

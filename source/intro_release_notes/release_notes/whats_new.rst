@@ -22,7 +22,7 @@ Additionally, OpenNebula 6.0 ‘Mutara’ comes with the following goodies:
 
 As usual, OpenNebula 6.0 codename refers to a nebula, in this case to the Mutara Nebula, an interstellar dust cloud located in the Mutara sector of the Beta Quadrant. In 2285, it was the site of the epic battle between the USS Reliant (commanded by the infamous Khan Noonien Singh) and the USS Enterprise (commanded by Captain James T. Kirk), which ended [Spoiler Alert] with the detonation of the Genesis Device and the USS Enterprise making a last-minute escape thanks to the dramatic self-sacrifice of Mr Spock—as seen in Star Trek II: The Wrath of Khan :)
 
-The OpenNebula team is now transitioning to “bug-fixing mode”. Note that this is a second beta release aimed at testers and developers to try the new features, and we welcome you to send feedback for the final release. Please check the :ref:`known issues <known_issues>` before submitting an `issue through GitHub <https://github.com/OpenNebula/one/issues/new?template=bug_report.md>`__. Also note that being a beta, there is no migration path from the previous stable version (5.12.x) nor migration path to the final stable version (6.0). A list of open issues can be found in the `GitHub development portal <https://github.com/OpenNebula/one/milestone/32>`__.
+This is a Release Candidate version for 6.0, aimed at testers and developers to try the new features. All the functionality is present and only bugfixes will happen between this release and final 6.0. Please check the :ref:`known issues <known_issues>` before submitting an `issue through GitHub <https://github.com/OpenNebula/one/issues/new?template=bug_report.md>`__. Also note that being a development version, there is no migration path from the previous stable version (5.12.x) nor migration path to the final stable version (6.0). A list of open issues can be found in the `GitHub development portal <https://github.com/OpenNebula/one/milestone/32>`__.
 
 
 In the following list you can check the highlights of OpenNebula 6.0 (a detailed list of changes can be found `here <https://github.com/OpenNebula/one/milestone/32?closed=1>`__):
@@ -115,14 +115,12 @@ onedb
 Distributed Edge Provisioning
 ================================================================================
 
-- Provision information is stored using a JSON document. New commands has been also added in the CLI, you can check all the information :ref:here <ddc>.
-- Provider concept has been included in OpenNebula, you can check all the information :ref:here <ddc_provider>.
-- Provision template concept has been included in OpenNebula, you can check all the information :ref:here <ddc_provision_template_document>.
+- Provision information is stored using a JSON document. New commands has been also added in the CLI, you can check all the information :ref:`here <cluster_operations>`.
+- Provider concept has been included in OpenNebula, you can check all the information :ref:`here <provider_operations>`.
 - Provision operations has been implemented using Terraform. The same functionality is supported, but actions are triggered using Terraform.
-- Terraform is able to create more resources on the remote provider. Check more information :ref:here <terraform_advanced>.
-- Count attribute has been addded. This allow you to create multiple same hosts. Check more information :ref:here <ddc_provision_template_devices>.
-- ERB syntax has been changed by a new syntax. Check more information :ref:here <ddc_virtual_all>.
-- Dynamic user inputs has been added. This allow you to set multiple values inside the template. Check more information :ref:here <ddc_user_inputs>.
+- Count attribute has been addded. This allow you to create multiple same hosts. Check more information :ref:`here <ddc_virtual>`.
+- ERB syntax has been changed by a new syntax. Check more information :ref:`here <ddc_virtual>`.
+- Dynamic user inputs has been added. This allow you to set multiple values inside the template. Check more information :ref:`here <ddc_user_inputs>`.
 
 Packaging
 ================================================================================
@@ -158,7 +156,7 @@ DockerHub
 MarketPlace
 ===========
 
-- Add support for service templates, check :ref:`this <marketapp_import>` for more information.
+- Add support for service templates, check :ref:`this <marketapp>` for more information.
 
 Hooks
 =====

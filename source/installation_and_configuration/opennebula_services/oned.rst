@@ -4,7 +4,7 @@
 OpenNebula Configuration (oned)
 ===============================
 
-The OpenNebula Daemon (``oned``) is the **core service of the cloud management platform**. It manages the cluster nodes, virtual networks and storages, groups, users, and their virtual machines, provides the XML-RPC API to other services and end-users. The service is distributed as an operating system package ``opennebula`` with system service ``opennebula``.
+The OpenNebula Daemon (``oned``) is the **core service of the cloud management platform**. It manages the cluster nodes, virtual networks and storages, groups, users and their virtual machines, and provides the XML-RPC API to other services and end-users. The service is distributed as an operating system package ``opennebula`` with system service ``opennebula``.
 
 Configuration
 =============
@@ -294,7 +294,7 @@ Here you can configure the default values for the Datastores and Image templates
 
 - ``DEFAULT_IMAGE_PERSISTENT_NEW``: Control the default value for the ``PERSISTENT`` attribute on image creation (``oneimage create``). By default images are not persistent if this is not set.
 
-More information on the image repository can be found in the :ref:`Managing Virtual Machine Images guide <img_guide>`.
+More information on the image repository can be found in the :ref:`Managing Virtual Machine Images guide <images>`.
 
 Sample configuration:
 
@@ -929,3 +929,7 @@ Other logs are also available in Journald, use the following command to show:
 .. prompt:: bash # auto
 
     # journalctl -u opennebula.service
+
+.. important::
+
+    See :ref:`Troubleshooting <troubleshoot_additional>` guide to learn about logging of individual OpenNebula Daemon subsystems and drivers.

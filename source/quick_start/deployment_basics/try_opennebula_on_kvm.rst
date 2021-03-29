@@ -27,10 +27,35 @@ You'll need a server to try out OpenNebula. The provided host should have a fres
 
 - 4 GiB RAM
 - 20 GiB free space on disk
-- default installation of the operating system with the latest updates
+- public IP address (FE-PublicIP)
 - privileged user access (`root`)
 - openssh-server package installed
 - operating system: CentOS 7 or 8, Debian 9 or 10, Ubuntu 18.04 or 20.04
+- open ports: 22 (SSH), 80 (Sunstone), 2616 (FireEdge), 5030 (OneGate).
+
+If you don't have a server available with the above characteristics, we recommend using a the Amazon EC2 service to obtain a VM to act as OpenNebula front-end. A tested combination is the following (by no means the only one possible):
+
+- Frankfurt region
+- Ubuntu Server 20.04 LTS (HVM), SSD Volume Type - ami-0767046d1677be5a0
+- t2.small
+- 40 GB hard disk (you need to edit the Storage tab before launching the instance, by default comes with just 8GB)
+- before launching the instance, please open the ports defined above by editing the Security Groups as per the picture. This can also happen after launcing the instance following `this guide <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/authorizing-access-to-an-instance.html>`__.
+
+|aws_security_groups|
+
+In order to ssh into the EC2 VM, you need to pass the correct user and PEM file (you can create one and download it prior to launching the instance). You'll then be conecting to your front-end using a comand similar to:
+
+.. prompt:: bash # auto
+
+    # ssh <FE-PublicIP> -l ubuntu -i <PATH-TO-PEM-FILE>
+
+We recommend updating the system:
+
+.. prompt:: bash # auto
+
+    # sudo apt update && sudo apt upgrade
+
+.. |aws_security_groups| image:: /images/aws_security_groups.png
 
 Download
 ========
@@ -66,7 +91,7 @@ Run the following command under the privileged user **root** to get ready the al
 
 .. prompt:: bash # auto
 
-    # bash minione --frontend
+    # sudo bash minione --frontend
 
 Be patient, it should take only a few minutes to get the host prepared. Main deployment steps are logged on the terminal and at the end of a successful deployment, the miniONE tool provides a report with connection parameters and initial credentials. For example:
 
@@ -74,11 +99,13 @@ Be patient, it should take only a few minutes to get the host prepared. Main dep
 
     ### Report
     OpenNebula 6.0 was installed
-    Sunstone (the webui) is running on:
-      http://192.0.2.1/
+    Sunstone is running on:
+      http://3.121.76.103/
+    FireEdge is running on:
+      http://3.121.76.103:2616/
     Use following to login:
-      user: oneadmin
-      password: t5mk2tvPCG
+      user: oneadmin
+      password: lCmPUb5Gwk
 
 Now, the OpenNebula front-end for evaluation is ready.
 

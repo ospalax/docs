@@ -1,10 +1,27 @@
+
 .. _first_edge_cluster:
 
 ============================
 Provisioning an Edge Cluster
 ============================
 
+In this quick start guide we are going to try different workloads. Each workload needs to be deployed in a compatible type of edge cluster, since not all of them are capable of running all types of workload. More information on this is available in the :ref:`platform notes <uspng>`.
+
++--------------------------------------------------+-------------------+-------------+
+|                     Workload                     | Edge Cluster Type |  Hypervisor |
++==================================================+===================+=============+
+| :ref:`Containers <running_containers>`           | virtual           | lxc         |
++--------------------------------------------------+-------------------+-------------+
+| :ref:`VMs <running_virtual_machines>`            | metal             | kvm         |
++--------------------------------------------------+-------------------+-------------+
+| :ref:`K8s cluster <running_kubernetes_clusters>` | metal             | kvm         |
++--------------------------------------------------+-------------------+-------------+
+| :ref:`K3s cluster <running_k3s_clusters>`        | metal             | firecracker |
++--------------------------------------------------+-------------------+-------------+
+
 In this section you can check all the steps needed to deploy an **Edge Cluster**. It will involve the Fireedge OneProvision GUI and Sunstone to manage the resources created in OpenNebula.
+
+.. note:: We will be creating a virtual edge cluster with lxc hypervisor, valid to deploy containers. If you are planning to go all the way and also try the deployment of VMs and K8s cluster, we recommend using a metal edge cluster deployment with kvm hypervisor.
 
 Overview
 ================================================================================
@@ -25,46 +42,31 @@ During the provision of the cluster all these resources and their corresponding 
 * An Internet Gateway to provide Internet access to host and VMs.
 * A routing table for the previous elements.
 
-Step 1: Requirements & Configuration
+.. note:: Take into account that FireEdge will request Elatic IPs for the public IPs you requested. If you receive an error creating a provision about not being able to request more IPs, please check the `limits of your account <https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.html>`__ in your zone.
+
+We will be using the FireEdge GUI in this guide. Please make sure you can login into it, usin your front-end IP and default port 2616, as well as your oneadmin credentials.
+
+Step 1: Configuring AWS & Needed Information
 ================================================================================
 
-External tools
-^^^^^^^^^^^^^^
+As a first step, if you don't have one, create an account in AWS. You can follow `this guide <https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/>`__.
 
-You also need to install Ansible and Terraform, as both components are used to deploy and configure all the resources in the remote provider. You can find below the supported versions for both components:
-
-+-----------+-----------------+
-| Component | Version         |
-+===========+=================+
-| Ansible   | 2.8.x and 2.9.x |
-+-----------+-----------------+
-| Terraform | 0.14.7          |
-+-----------+-----------------+
-
-AWS account
-^^^^^^^^^^^
-
-Finally, you need to create an account in AWS, you can follow `this guide <https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/>`__.
-
-Step 2: Configuring AWS & Needed Information
-================================================================================
-
-In order to be able to interact with AWS, you need to obtain both an ``access_key`` and a ``secret_key`` of a user that has access to instances management. You can follow `this guide <https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html>`__.
+Whenever your account is ready, you need to obtain both an ``access_key`` and a ``secret_key`` of a user that has access to instances management. You can follow `this guide <https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html>`__.
 
 Then, you need to choose the region where you want to deploy the resources. All the available regions can be checked `here <https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html>`__.
 
 .. warning:: To be able to connect to the instances you deploy, you will need SSH keys. They are installed on ``/var/lib/one/.ssh-oneprovision``.
 
-Step 3: Create an AWS provider
+Step 2: Create an AWS provider
 ================================================================================
 
-To deploy a complete edge provision with oneprovision from GUI, you need first a remote provider. Including the connection parameters and location where deploy those resources.
+To deploy a complete edge provision with oneprovision from GUI, you need first a remote provider. Including the connection parameters and location where deploy those resources
 
 First, to **create a provider**, go to provider list view:
 
 |image_provider_list_empty|
 
-Then, **click over plus button** and fill the form:
+Then, **click the plus button** and fill the form. We will be using virtual edge cluster type with lxc hypervisor.
 
 |image_provider_create_step1|
 
@@ -74,30 +76,30 @@ Then, **click over plus button** and fill the form:
 
 You now have a **new provider**.
 
-Step 4: Provision a Virtual Edge Cluster
+Step 3: Provision a Virtual Edge Cluster
 ================================================================================
 
 The user needs to provide the following user inputs to create the provision:
 
-+-----------------------+-------------------------------------------------------------------------------------------------------------+
-| User Input            | Description                                                                                                 |
-+=======================+=============================================================================================================+
-| ``Provider``          | This is the provider you just created above.                                                                |
-+-----------------------+-------------------------------------------------------------------------------------------------------------+
-| ``Number of hosts``   | Number of physical hosts to be deployed on AWS.                                                             |
-+-----------------------+-------------------------------------------------------------------------------------------------------------+
-| ``Number of IPs``     | Number of public IPs to get from AWS in order to connect to VMs.                                            |
-+-----------------------+-------------------------------------------------------------------------------------------------------------+
-| ``AWS instance type`` | AWS instance type to deploy.                                                                                |
-+-----------------------+-------------------------------------------------------------------------------------------------------------+
-| ``Hypervisor``        | Hypervisor to install ``qemu`` (just for virtual servers)                                                   |
-+-----------------------+-------------------------------------------------------------------------------------------------------------+
++-----------------------+------------------------------------------------------------------+
+|       User Input      |                           Description                            |
++=======================+==================================================================+
+| ``Provider``          | This is the provider you just created above.                     |
++-----------------------+------------------------------------------------------------------+
+| ``Number of hosts``   | Number of physical hosts to be deployed on AWS.                  |
++-----------------------+------------------------------------------------------------------+
+| ``Number of IPs``     | Number of public IPs to get from AWS in order to connect to VMs. |
++-----------------------+------------------------------------------------------------------+
+| ``AWS instance type`` | AWS instance type to deploy.                                     |
++-----------------------+------------------------------------------------------------------+
+| ``Hypervisor``        | Hypervisor to install ``lxc`` (just for virtual servers)         |
++-----------------------+------------------------------------------------------------------+
 
 Let's go now to **create a provision**, and follow the same steps:
 
 |image_provision_list_empty|
 
-**Select the provider** where you will deploy the provision:
+**Select the provider** where you will deploy the provision. You will only have the one defined in the previous step.
 
 |image_provision_create_step1|
 
@@ -107,7 +109,7 @@ Let's go now to **create a provision**, and follow the same steps:
 
 |image_provision_create_step4|
 
-Once form is completed, you can see it at list:
+After clicking finish, you will be able to see the provision card in the Provisions tab:
 
 |image_provision_list|
 
@@ -117,7 +119,9 @@ Let's explore **the log and detailed information**
 
 |image_provision_log|
 
-Step 5: Validation
+Your provision will be ready when you see the message "Provision successfully created" in the log, followed by the ID of the recently created provision.
+
+Step 4: Validation
 ================================================================================
 
 **Infrastructure Validation**

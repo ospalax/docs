@@ -70,18 +70,20 @@ KVM Nodes
 |                          | For CentOS/RHEL the packages from ``qemu-ev`` are used. |                                         |
 +--------------------------+---------------------------------------------------------+-----------------------------------------+
 
-LXD Nodes
+LXC Nodes
 --------------------------------------------------------------------------------
 
-+---------------+-------------------------------------------------------+-----------------------------------------+
-|   Component   |                        Version                        |             More information            |
-+===============+=======================================================+=========================================+
-| Ubuntu Server | 18.04 (LTS), 20.04 (LTS), 20.10                       | :ref:`LXD Driver <lxdmg>`               |
-+---------------+-------------------------------------------------------+-----------------------------------------+
-| Debian        | 10                                                    | :ref:`LXD Driver <lxdmg>`               |
-+---------------+-------------------------------------------------------+-----------------------------------------+
-| LXD           | Support for LXD = 3.0.x either snap or system package | :ref:`LXD Node Installation <lxd_node>` |
-+---------------+-------------------------------------------------------+-----------------------------------------+
++---------------+--------------------------------------------------------+-----------------------------------------+
+|   Component   |                        Version                         |             More information            |
++===============+========================================================+=========================================+
+| Ubuntu Server | 18.04 (LTS), 20.04 (LTS), 20.10                        | :ref:`LXC Driver <lxcmg>`               |
++---------------+--------------------------------------------------------+-----------------------------------------+
+| Debian        | 9, 10                                                  | :ref:`LXC Driver <lxcmg>`               |
++---------------+--------------------------------------------------------+-----------------------------------------+
+| CentOS        | 8                                                      | :ref:`LXC Driver <lxcmg>`               |
++---------------+--------------------------------------------------------+-----------------------------------------+
+| LXC           | Support for version included in the Linux distribution | :ref:`LXC Node Installation <lxc_node>` |
++---------------+--------------------------------------------------------+-----------------------------------------+
 
 Firecracker Nodes
 --------------------------------------------------------------------------------
@@ -224,6 +226,25 @@ Sunstone
 
 .. note:: Generally for all Linux platforms, it is worth noting that Ruby gems should be used from packages shipped with OpenNebula or installed with the :ref:`install_gems <ruby_runtime>` utility. Avoid using Ruby gems versions shipped with your platform.
 
+.. _edge_cluster_provision_workloads_compatibility:
+
+Compatibility of Workloads on Certified Edge Clusters
+=====================================================
+
+Containers workloads are those imported from DockerHub, LinuxContainers or TunrkeyLinux, as well as images created from DockerFiles. Virtual Machine worloads uses full system disk images.
+
+The OneProvision tool enables the deployment of Edge Clusters and their automatic enrollment to OpenNebula. The following table lays out the certified configuration for each type of workload.
+
++-------------------+-------------+------------------+
+| Edge Cluster Type |  Hypervisor |     Workload     |
++===================+=============+==================+
+| virtual / metal   | lxc         | Containers       |
++-------------------+-------------+------------------+
+| metal             | firecracker | Containers       |
++-------------------+-------------+------------------+
+| metal             | kvm         | Virtual Machines |
++-------------------+-------------+------------------+
+
 
 Certified Infrastructure Scale
 ================================================================================
@@ -252,7 +273,7 @@ There is a bug in libvirt that the prevents the use of the save/restore mechanis
 Debian 9
 --------------------------------------------------------------------------------
 
-Guacamole does not come with RDP support due to the lack of availabilituy of libfreerdp2 in Debian 9. Hence this functionality won't be present if the front-end runs in this platform.
+Guacamole does not come with RDP support due to the lack of availability of libfreerdp2 in Debian 9. Hence this functionality won't be present if the front-end runs in this platform.
 
 
 Nodes Platform Notes
@@ -324,3 +345,12 @@ It is recommended that you disable PolicyKit for Libvirt:
   unix_sock_ro_perms = "0770"
   unix_sock_rw_perms = "0770"
   ...
+
+
+vCenter 7.0 Platform Notes
+--------------------------------------------------------------------------------
+
+Problem with Boot Order
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Currently in vCenter 7.0 changing the boot order is only supported in Virtual Machines at deployment time.

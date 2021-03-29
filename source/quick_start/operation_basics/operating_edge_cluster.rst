@@ -37,7 +37,7 @@ The basic operations you can perform with the host are:
 * **Disable**: disable it, e.g to perform maintenance operations.
 * **Enable**: enable it, so OpeNnebula monitors it and it comes to MONITORED again.
 
-Check :ref:`this link <host_guide>` to get a complete vision of host management.
+Check :ref:`this link <hosts>` to get a complete vision of host management.
 
 Datastores
 ================================================================================
@@ -51,12 +51,14 @@ Each Edge Cluster contains two datastores, one system and one image. Both of the
 
 |image_datastore|
 
-Check :ref:`this link <ds_op>` to get a complete vision of datastore management.
+Check :ref:`this link <datastores>` to get a complete vision of datastore management.
+
+.. _edge_public:
 
 Virtual Networks: Public
 ================================================================================
 
-A vitual network in OpenNebula basically resembles the physical network on the datacenter. Using this allow VMs to have connectivity between them and with rest of the world. Each Edge Cluster has one public networking with the number of the IPs chosen by the user, this will allow VMs to have public connectivity so the user can connect to them.
+A virtual network in OpenNebula basically resembles the physical network on the datacenter. Using this allow VMs to have connectivity between them and with rest of the world. Each Edge Cluster has one public networking with the number of the IPs chosen by the user, this will allow VMs to have public connectivity so the user can connect to them.
 
 |image_public_net|
 
@@ -69,11 +71,13 @@ If you want to add more IPs to the network, you need to follow these steps:
 
 |image_add_ar|
 
-.. note:: You should put your valid provision ID and CIDR.
+.. note:: You should put your valid provision ID.
 
 .. important:: You can only request 1 IP per address range.
 
 Check :ref:`this link <net_guide>` to get a complete vision of virtual network management.
+
+.. _edge_private:
 
 Virtual Networks: Private
 ================================================================================

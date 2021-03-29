@@ -177,6 +177,10 @@ The Sunstone configuration file can be found in ``/etc/one/sunstone-server.conf`
 |                                 | (Default: ``http://localhost:2616``)                                                                |
 +---------------------------------+-----------------------------------------------------------------------------------------------------+
 
+.. _sunstone_in_ha:
+
+In order to properly use Sunstone with FireEdge in HA environments and have the Guacamole functionality available, all Susntone servers need to access ``/var/lib/one/.one/fireedge_key``.
+
 .. note::
 
     To use Sunstone on IPv6-only environments with `thin <https://github.com/macournoyer/thin>`__ HTTP server, use the full IPv6 address in the configuration parameter ``:host``. If you need to set the localhost address (``::1``) or the unspecified address (``::``), use one of the following examples:
@@ -355,7 +359,7 @@ You can retrieve useful information from ``/var/log/one/novnc.log``. **Your brow
 websockets**, and have them enabled.
 
 When using secure websockets, make sure that your certificate and key (if not included in the
-certificate) are correctly set in the :ref:`Sunstone configuration files <suns_advance_ssl_proxy>`.
+certificate) are correctly set in the :ref:`Sunstone configuration files <sunstone_setup>`.
 Note that your certificate must be valid and trusted for the wss connection to work.
 
 If you are working with a certificate that it is not accepted by the browser, you can manually add

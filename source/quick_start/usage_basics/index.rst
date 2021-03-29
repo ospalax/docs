@@ -8,5 +8,7 @@ Usage Basics
    :maxdepth: 2
 
    Overview <overview>
-   Running Applications <running_applications>
-   Elastic Application Workflows <elastic_application_workflows>
+   Running Containers <running_containers>
+   Running Virtual Machines <running_virtual_machines>
+   Running Kubernetes Clusters <running_kubernetes_clusters>
+   Running K3s Clusters <running_k3s_clusters>

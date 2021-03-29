@@ -6,6 +6,8 @@
 Installation and Configuration
 ================================================================================
 
+The Installation and Configuration Guide provides instructions on how to do a production-ready installation of OpenNebula with HA or federation and to configure the main OpenNebula services. To know how to manage and operate your cloud, go to the Management and Operations Guide. To deploy customized clusters, go to the Deployment Guides after completing this guide.
+
 .. toctree::
    :maxdepth: 2
 
@@ -17,5 +19,4 @@ Installation and Configuration
    Authentication Configuration <authentication/index>
    Private Marketplaces <private_marketplaces/index>
    Configuration Management (EE) <configuration_management/index>
-   Customized Clusters Installation (To Be Removed) <customized_clusters_installation/index>
    Containerized Deployment (TP) <containerized_deployment/index>
