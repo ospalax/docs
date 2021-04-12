@@ -110,17 +110,7 @@ Hotplug Resize VM Capacity
 
 .. important:: Hotplug implemented only for KVM and vCenter
 
-If you need to resize the capacity in ``RUNNING`` state you have to setup some extra attributes to VM template, these attributes must be set before the VM is started.
-
-+------------------+-------------------------------------------------------------------------------------------------+-----------+
-| Attribute        | Description                                                                                     | Mandatory |
-+==================+=================================================================================================+===========+
-| ``VCPU_MAX``     | Maximum number of VCPUs which could be hotplugged.                                              | **NO**    |
-+------------------+-------------------------------------------------------------------------------------------------+-----------+
-| ``MEMORY_MAX``   | Maximum memory which could be hotplugged.                                                       | **NO**    |
-+------------------+-------------------------------------------------------------------------------------------------+-----------+
-| ``MEMORY_SLOTS`` | Optional, slots for hotplugging memory. Limits the number of hotplug operations. Defaults to 8. | **NO**    |
-+------------------+-------------------------------------------------------------------------------------------------+-----------+
+If you need to resize the capacity in ``RUNNING`` state you have to setup some extra attributes to VM template, these attributes must be set before the VM is started. These attributes are driver specific, more info for :ref:`KVM <kvm_live_resize>` and :ref:`vCenter <vcenter_live_resize>`.
 
 .. _template_showback_section:
 
@@ -221,6 +211,8 @@ This section (``CPU_MODEL``) configures the hardware configuration of the CPU ex
 |                         | the same model as the host. Available modes are stored   |     |         |         |
 |                         | in the host information and obtained through monitor.    |     |         |         |
 +-------------------------+----------------------------------------------------------+-----+---------+---------+
+
+.. _template_features:
 
 Features Section
 ================================================================================

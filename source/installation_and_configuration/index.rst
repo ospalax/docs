@@ -1,12 +1,14 @@
+.. _ic:
 .. _advanced_components:
 .. _design_and_installation_guide:
 .. _deployment_guide:
+.. _installation_and_configuration:
 
 ================================================================================
 Installation and Configuration
 ================================================================================
 
-The Installation and Configuration Guide provides instructions on how to do a production-ready installation of OpenNebula with HA or federation and to configure the main OpenNebula services. To know how to manage and operate your cloud, go to the Management and Operations Guide. To deploy customized clusters, go to the Deployment Guides after completing this guide.
+The Installation and Configuration Guide provides instructions on how to carry out a production-ready installation of OpenNebula with HA or federation, and how to configure the main OpenNebula services. To know how to manage and operate your cloud, go to the Management and Operations Guide. To deploy customized clusters, go to the Deployment Guides after completing this guide.
 
 .. toctree::
    :maxdepth: 2
