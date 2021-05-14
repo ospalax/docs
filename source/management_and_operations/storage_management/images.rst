@@ -135,12 +135,19 @@ You can also create plain data disks to define user storage or scratch areas in 
     $ oneimage create --size 10240 --name db-disk --format qcow2 --datastore default
     ID: 2
 
+You can even create a filesystem in the new image so it is ready-to-use by the VMs:
+
+.. prompt:: text $ auto
+
+    $ oneimage create --size 10240 --name fs-vol --format qcow2 --fs ext4 --datastore default
+    ID: 3
+
 Using Marketplaces
 --------------------------------------------------------------------------------
 
 OpenNebula leverages the applications created by several popular marketplaces, like DockerHub or Linuxcontainers.org. These are great places to grab a working installation of an OS/application ready to use in your Cloud. The OpenNebula project also prepares *contextualized* OS installations of popular distributions and applications, you can `check the list in the OpenNebula Marketplace <https://marketplace.opennebula.io/appliance>`_.
 
-You can find :ref:`more information on using these Martkeplaces here <marketplaces>`.
+You can find :ref:`more information on using these Marketplaces here <marketplaces>`.
 
  .. _dockerfile:
 

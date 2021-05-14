@@ -41,14 +41,9 @@ Storage Limitations
 
 - Firecracker only supports ``raw`` format images.
 
-- The Firecracker driver is only compatible with :ref:`Filesystem Datastores <fs_ds>`. It supports every ``TM_MAD`` supported by Filesystem Datastores except ``qcow2`` as it doesn't support ``qcow2`` images.
+- The Firecracker driver is only compatible with :ref:`NFS/NAS Datastores <nas_ds>` and :ref:`Local Storage Datastores <local_ds>`. Note that **``qcow2`` format is not supported**.
 
 - As Firecracker Jailer performs a ``chroot`` operation under the microVM location, persistent images are not supported when using ``TM_MAD=shared``. In order to use persistent images when using ``TM_MAD=shared`` the system ``TM_MAD`` must be overwritten to use ``TM_MAD=ssh`` this can be easily achieved by adding ``TM_MAD_SYSTEM=ssh`` at the microVM template. More info on how to combine different ``TM_MADs`` can be found :ref:`here <shared-ssh-mode>`.
-
-Networking Limitations
---------------------------------------------------------------------------------
-
-Firecracker only supports networking based on Linux bridges.
 
 MicroVM Actions
 --------------------------------------------------------------------------------
@@ -139,7 +134,7 @@ Kernel images can build the desired kernel version, with the configuration attri
 Networking
 ================================================================================
 
-Firecracker is fully integrated with every networking driver based on linux bridge.
+Firecracker works with all OpenNebula networking drivers.
 
 As Firecracker does not manage the tap devices used for microVM networking, OpenNebula takes care of managing these devices and plugs then inside the pertinent bridge. In order to enable this functionality the following actions have to be carried out manually when networking is desired for MicroVMs.
 
@@ -203,3 +198,10 @@ MicroVMs supports remote access via VNC protocol which allows easy access to mic
     GRAPHICS=[
       LISTEN="0.0.0.0",
       TYPE="VNC" ]
+
+Troubleshooting
+================================================================================
+
+Apart from the :ref:`system logs <troubleshoot>`, Firecracker generates a microVMs log inside the `jailed` folder. This log can be found in: ``/var/lib/one/datastores/<sys_ds_id>/<vm_id>/logs.fifo``.
+
+.. note:: This log cannot be forwarded outside the VM folder, as while the Firecracker microVMs run, the Firecracker process is isolated in their VM folder to increase the security. More information on how Firecracker isolates the microVM can be found in the Firecracker `official documentation <https://github.com/firecracker-microvm/firecracker/blob/main/docs/design.md#jailer-process>`__.

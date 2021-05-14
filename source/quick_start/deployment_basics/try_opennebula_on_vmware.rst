@@ -4,7 +4,7 @@
 Try OpenNebula on VMware
 ========================
 
-In this guide, we'll go through a Front-end OpenNebula environment deployment, where all the OpenNebula services needed to use, manage and run the cloud will bei deployed through an OVA and collocated on the single VM running on a vCenter instance. Later, we'll import some vCenter resources and launch a VM Template. Afterwards you can continue to the Operations Basics section to add a remote Edge Cluster to your shiny new OpenNebula cloud!
+In this guide, we'll go through a Front-end OpenNebula environment deployment, where all the OpenNebula services needed to use, manage and run the cloud will bei deployed through an OVA and collocated on the single VM running on a vCenter instance. Later, we'll import some vCenter resources and launch a VM Template. Afterwards, you can follow the Operations and Usage basics guides of this same Quick Start to launch edge clusters based on open source hypervisors.
 
 OpenNebula over VMware is intended for companies willing to create a self-service cloud environment on top of their VMware infrastructure without having to abandon their investment in VMware and retool the entire stack. In these environments, OpenNebula seamlessly integrates with existing vCenter infrastructures to leverage advanced features such as vMotion, HA or DRS. OpenNebula exposes a multi-tenant, cloud-like provisioning layer on top of vCenter, enabling you to take steps towards liberating your stack from vendor lock-in. Once you have built your cloud with OpenNebula on VMware, you can then add new resources based on open source hypervisors ⁠— like KVM — and hence use OpenNebula as a migration framework to the open cloud.
 
@@ -56,7 +56,7 @@ The following components need to be present in the infrastructure to implement a
 
 To enable VNC functionality, please follow these :ref:`instructions <vnc_one_esx_hosts>`.
 
-vOneCloud ships with a default of 1 vCPUs and 2 GB of RAM, and as such it has been certified for infrastructures of the following dimensions:
+vOneCloud ships with a default of 1 vCPUs and 2.5 GiB of RAM, and as such it has been certified for infrastructures of the following dimensions:
 
 - Up to 4 vCenters
 - Up to 40 ESXs managed by each vCenter
@@ -301,9 +301,11 @@ After the VMs are in the running state, you can operate on their life-cycle, ass
 Step 6. Verification - Launch a VM
 ---------------------------------------------------------------
 
-Let's check out this OpenNebula installation doing what it does best: launching Virtual Machines. Go to your ``Instances -> VMs`` tab in Sunstone and click on the "+" green icon. Select the VM Template imported in the previous step (feel free to change any configuration aspect) and click on Instantiate.
+Let's check out this OpenNebula installation doing what it does best: launching Virtual Machines. Go to your ``Instances -> VMs`` tab in Sunstone and click on the "+" green icon. Select the VM Template imported in the previous step (feel free to change any configuration aspect) and click on Create.
 
 .. image:: /images/instantiate_vcenter_vm_template.png
     :align: center
 
 OK! Your VM should be up and running switfly. Check the console icon to access your VM through VMRC within Sunstone.
+
+Now you can proceed to :ref:`Operations Basics <operation_basics>` to launch an edge cluster on a public cloud provider.
